@@ -1,6 +1,6 @@
 ## A lightweight crossplatform Code/Text editor IDe
 
-### Project status - underdevlopment
+### Project status - underdevelopment
 
 Screenshot -
 
