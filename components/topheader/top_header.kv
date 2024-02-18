@@ -1,0 +1,32 @@
+<TopHeader>:
+    size_hint_y: None
+    height: "30dp"
+    pos_hint: { 'top': 1 }
+    background_color: [60/255, 48/255, 72/255, 1]
+    background_image: ''
+    ActionView:    
+        ActionPrevious:
+            padding: -8, 5, 5, 5, # left, top, right, bottom
+            title: 'CatxCode'
+            with_previous: False
+            app_icon: 'assets/icons/icon.jpg'           
+        ActionOverflow:
+        ActionButton:
+            text: "New file"
+            on_press: app.create_new_file_from_header()
+        ActionButton:
+            text: "Open File"
+            on_press: app.open_file_from_header()
+        ActionButton:
+            text: "Save File"
+        ActionButton:
+            text: "Run"
+            color: "green"
+            on_press: app.run_code()
+        ActionButton:
+            text: 'Settings'
+            on_press: app.open_settings()
+        ActionButton:
+            text: 'Quit'
+            on_press: app.get_running_app().stop()
+        

@@ -1,0 +1,58 @@
+#:import TopHeader components.topheader.top_header.TopHeader
+#:import SideMenu components.sidemenu.side_menu.SideMenu
+#:import SideMenuTabWindows components.sidemenu.side_menu.SideMenuTabWindows
+#:import WelcomeTab components.codetabs.all_tabs.WelcomeTab
+Screen:
+    
+    BoxLayout:
+        orientation:'vertical'
+        BoxLayout:
+            size_hint_y: None
+            height: self.minimum_height
+            TopHeader:
+        BoxLayout:
+            orientation: "horizontal"
+            BoxLayout:
+                size_hint_x: None
+                width: self.minimum_width
+                SideMenu:
+            BoxLayout:
+                # side menu Tab
+                Splitter:
+                    size_hint_x: None
+                    width: self.minimum_width
+                    sizable_from: "right"
+                    strip_size : '3pt'
+                    min_size: "120dp"
+                    max_size: "250dp"
+                    SideMenuTabWindows:
+                
+                # code panels
+                BoxLayout:
+                    TabbedPanel: # TabbedPanel:
+                        id: all_tabs_bar
+                        size_hint: 1, 1
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        do_default_tab: False
+                        tab_size_hint_x: None
+                        tab_height:"30dp"
+                        #tab_width: self.minimum_width
+                        # tabs: 
+                        WelcomeTab:
+
+
+        # bottom bar
+        BoxLayout:
+            orientation:'horizontal'
+            size_hint_y: None
+            height: "25dp"
+            canvas.before:
+                Color:
+                    rgba: (99/255, 166/255, 242/255, 0.327)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Label:
+                text: "python"
+            Label:
+                text:'Ln 33, Col 29'

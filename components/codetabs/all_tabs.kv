@@ -1,0 +1,156 @@
+# <AllTabs>:
+#     id: all_tabs
+#     size_hint: 1, 1
+#     pos_hint: {'center_x': .5, 'center_y': .5}
+#     do_default_tab: False
+#     tab_height:"30dp"
+#     tab_width: "100dp"
+#     # tabs
+
+
+<CodeLineCounter>:
+    padding: 0,4,0,0
+    text: f"{root.row_number_counter_for_code}"
+    font_size: 12
+    size_hint: None, None
+    width: "32dp"
+    height: "20dp"
+    canvas.before:
+        Color:
+            rgba: (144/255, 114/255, 175/255, 0) if self.state == "normal" else (75/255, 0, 0, .8)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos    
+            radius: [15,]  
+
+<HeaderForTabs>:
+    # the tab header is a toggle button, we are putting a Label on top of the Togglebutton
+    # setting the size and position of the label on top of the TabHeader
+    text: '' # do not set the text of the underlying toggle button
+    Label: 
+        size_hint: None, 1
+        width: "250"
+        # size: root.size
+        pos: root.pos
+        text: root.custom_tab_name
+        markup: True
+        on_ref_press: app.close_tabsT(*args)
+
+<CustomTabs>:
+    id: custom_tab
+    # text: f"{root.custom_tab_name} [ref=n]✖[/ref]"
+    # font_name: "seguiemj.ttf"
+    # on_ref_press: app.close_tab(self, custom_tab)
+    # markup: True
+    # background_color: "#31044e"
+    # background_normal: ''
+
+    # code mechanism
+
+    BoxLayout:
+        ScrollView:
+            do_scroll_y: True
+            do_scroll_x: True
+            bar_width: "15dp"
+            scroll_type: ['bars', 'content']
+            bar_color: "purple"
+            BoxLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                BoxLayout:
+                    spacing: "5dp"
+                    halign: "top"
+                    id: code_line_counter_container
+                    orientation: "vertical"
+                    size_hint_x: None
+                    width: "32dp"
+
+                    
+                CodeInput:
+                    id: code_input
+                    text: root.code_text
+                    # set_cursor: "ibeam"
+                    font_size: 18
+                    cursor: (3,1)
+                    cursor_width: "3sp"
+                    allow_copy: True
+                    selection_color: 1, 136/255, 237/255, .4
+                    size_hint_y: None
+                    text_size: self.width, None
+                    height: self.minimum_height
+                    # foreground_color: (1,0,0,1)
+                    background_color: "#302d2e"
+                    border_color: "#f88fbd"
+                    on_text: root._on_text(self)
+
+<RoundedBoxLabel@Label>:
+    size_hint_y: None
+    height: "40dp"
+    markup: True
+    font_size: 18
+    color: "blue"
+    size_hint_x: .4
+    pos_hint: {'center_x': .5}
+    font_name: r"assets\fonts\seguiemj.ttf"
+    canvas.before:
+        Color:
+            rgba: (208/255, 5/255, 5/255,1)
+        Line:
+            width: 1.1
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 10)
+
+<WelcomeTab>:
+    #:import random random
+    id: welcome_tab
+    size_hint_x: 1
+    size_hint_y: None
+    height: "30dp"
+    text: '+'
+    background_normal: ''
+    background_color: [60/255, 48/255, 72/255, 1]
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: (208/255, 187/255, 224/255,1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        BoxLayout:
+            orientation: "vertical"
+            spacing: 20
+            Label:
+                text: "Hello, Good morning😎😁😥"
+                font_name: "seguiemj.ttf"
+                color: "black"
+                text_size: self.size
+                halign: "center"
+                size_hint_y: None
+                height: "70dp"
+                font_size: "33sp"
+
+            RoundedBoxLabel:                  
+                text: "[ref=n]Create New File[/ref]"
+                on_ref_press: 
+                    root.create_new_file_popup()
+                    colors = ["green", "yellow", "purple", "red"]
+                    self.color = colors[random.randint(0,3)]
+
+            RoundedBoxLabel:                  
+                text: "[ref=n]Create folder[/ref]"
+                on_ref_press: print("fjil")
+
+            RoundedBoxLabel:
+                text: "[ref=n]Drag and Drop[/ref]"
+                on_ref_press: print("drag")
+
+            Widget:
+        # Button:
+        #     text: "Close"
+        #     background_color: 'red'
+        #     background_normal: ""
+        #     size_hint: None, None
+        #     height: 30
+        #     width: 42
+        #     pos_hint: {'center_x': .975, 'center_y': .971}
+        #     on_press: 
+        #         app.close_tab(self, welcome_tab)
