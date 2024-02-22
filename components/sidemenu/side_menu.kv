@@ -17,38 +17,45 @@
     size_hint: None, 1
     width: "45dp"
     LeftTabs:
+        id: files
+        name: "files"
         pos_hint: {'center_y': .7}
         group: "side_tabs"
         size_hint: 1, None
         height: "50dp"
-        source: "assets/navigations/document-files-white.png" if self.state == "normal" else "assets/navigations/document-files-pink.png" 
+        source: "assets/navigations/document-files-white.jpg" if self.state == "normal" else "assets/navigations/document-files-pink.jpg"
         on_press: 
-            print("sS")
-            print(self.state)
+            root.left_tab_state(self)
+            app.on_left_tab_state(self)
 
     LeftTabs:
-        source: "assets/navigations/magnifying-glass-white.png" if self.state == "normal" else "assets/navigations/magnifying-glass-pink.png" 
+        id: search
+        name: "search"
+        source: "assets/navigations/magnifying-glass-white.jpg" if self.state == "normal" else "assets/navigations/magnifying-glass-pink.jpg" 
         group: "side_tabs"
         size_hint: 1, None
         height: "50dp"
         text: "files"
+        on_press: 
+            root.left_tab_state(self)
+            app.on_left_tab_state(self)            
 
     Widget:
     LeftTabs:
-        source: "assets/navigations/terminal-white.png" if self.state == "normal" else "assets/navigations/terminal-pink.png" 
+        source: "assets/navigations/terminal-white.jpg" if self.state == "normal" else "assets/navigations/terminal-pink.jpg" 
         group: "side_tabs"
         size_hint: 1, None
         height: "50dp"
         text: "files"
     LeftTabs:
-        source: "assets/navigations/info-white.png" if self.state == "normal" else "assets/navigations/info-pink.png" 
+        source: "assets/navigations/info-white.jpg" if self.state == "normal" else "assets/navigations/info-pink.jpg" 
         group: "side_tabs"
         size_hint: 1, None
         height: "50dp"
         text: "files"
         on_press: root.app_info_open()
                     
-
+# side menu tabs windows for workspace and files explorer
 <SideMenuTabWindows>:
     orientation: 'vertical'
     canvas:
@@ -62,36 +69,37 @@
         do_scroll_x: False
         do_scroll_y: True
         BoxLayout:
+            id: explorer_tabs
+            orientation: "vertical"
             size_hint_y: None
             height: self.minimum_height
-            orientation: "vertical"
-            size_hint: 1, 1
             # width: "240dp"
             BoxLayout:
                 padding: "5dp"
                 size_hint_y: None
                 height: self.minimum_height
                 Explorer:
-                
-            FileNameLabel:
-            FileNameLabel:
-            FileNameLabel:
-            Widget:
+            # files and folders
+            # FileNameLabel
+            FoldersNameLabel:
 
-<FileNameLabel@ToggleButtonBehavior+Label>:
+
+
+<FileNameLabel>:
     canvas.before:
         Color:
-            rgba: (0, 0, 0, 0) if self.state == "normal" else (75/255, 53/255, 78/255, .5)
+            rgba: (0, 0, 0, 0) if self.state == "normal" else (75/255, 53/255, 78/255, .7)
         RoundedRectangle:
             size: self.size
             pos: self.pos
             radius: [5,]
     padding: "20dp"
     group: "file_and_folders"
-    text: "main.py"
+    text: root.file_and_folders_name
     size_hint: 1, None
     height: "34dp"
-    # on_release: print(self.state)
+    on_release: 
+        app.explorer_tabs(self)
 
 <Explorer@Label>:
     canvas.before:
@@ -104,3 +112,10 @@
     size_hint: 1, None
     font_name: r'assets\fonts\Poppins-BoldItalic.ttf'
     height: "34dp"
+
+
+<FoldersNameLabel>:
+    orientation: 'vertical'
+
+
+

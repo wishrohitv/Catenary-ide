@@ -23,27 +23,28 @@
             pos: self.pos    
             radius: [15,]  
 
-<HeaderForTabs>:
-    # the tab header is a toggle button, we are putting a Label on top of the Togglebutton
-    # setting the size and position of the label on top of the TabHeader
-    text: '' # do not set the text of the underlying toggle button
-    Label: 
-        size_hint: None, 1
-        width: "250"
-        # size: root.size
-        pos: root.pos
-        text: root.custom_tab_name
-        markup: True
-        on_ref_press: app.close_tabsT(*args)
+# <HeaderForTabs>:
+#     # the tab header is a toggle button, we are putting a Label on top of the Togglebutton
+#     # setting the size and position of the label on top of the TabHeader
+#     text: '' # do not set the text of the underlying toggle button
+#     Label: 
+#         size_hint: None, 1
+#         width: "250"
+#         # size: root.size
+#         pos: root.pos
+#         text: root.custom_tab_name
+#         markup: True
+#         on_ref_press: app.close_tabsT(*args)
+
 
 <CustomTabs>:
     id: custom_tab
-    # text: f"{root.custom_tab_name} [ref=n]✖[/ref]"
-    # font_name: "seguiemj.ttf"
-    # on_ref_press: app.close_tab(self, custom_tab)
-    # markup: True
-    # background_color: "#31044e"
-    # background_normal: ''
+    text: f"{root.custom_tab_name} [ref=n]✖[/ref]"
+    font_name: "seguiemj.ttf"
+    on_ref_press: app.close_tab(self, custom_tab)
+    markup: True
+    background_color: "#31044e"
+    background_normal: ''
 
     # code mechanism
 
@@ -54,6 +55,7 @@
             bar_width: "15dp"
             scroll_type: ['bars', 'content']
             bar_color: "purple"
+            effect_cls: "ScrollEffect"
             BoxLayout:
                 size_hint_y: None
                 height: self.minimum_height
@@ -79,10 +81,11 @@
                     text_size: self.width, None
                     height: self.minimum_height
                     # foreground_color: (1,0,0,1)
-                    background_color: "#302d2e"
+                    background_color: (1,1,1,1) #"#302d2e"
                     border_color: "#f88fbd"
                     on_text: root._on_text(self)
-
+                    
+# for welcome tab
 <RoundedBoxLabel@Label>:
     size_hint_y: None
     height: "40dp"
@@ -102,16 +105,13 @@
 <WelcomeTab>:
     #:import random random
     id: welcome_tab
-    size_hint_x: 1
-    size_hint_y: None
-    height: "30dp"
     text: '+'
     background_normal: ''
     background_color: [60/255, 48/255, 72/255, 1]
     BoxLayout:
         canvas.before:
             Color:
-                rgba: (208/255, 187/255, 224/255,1)
+                rgba: (208/255, 187/255, 224/255,.3)
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -119,7 +119,7 @@
             orientation: "vertical"
             spacing: 20
             Label:
-                text: "Hello, Good morning😎😁😥"
+                text: root.greetings
                 font_name: "seguiemj.ttf"
                 color: "black"
                 text_size: self.size
@@ -144,13 +144,13 @@
                 on_ref_press: print("drag")
 
             Widget:
-        # Button:
-        #     text: "Close"
-        #     background_color: 'red'
-        #     background_normal: ""
-        #     size_hint: None, None
-        #     height: 30
-        #     width: 42
-        #     pos_hint: {'center_x': .975, 'center_y': .971}
-        #     on_press: 
-        #         app.close_tab(self, welcome_tab)
+        Button:
+            text: "Close"
+            background_color: 'red'
+            background_normal: ""
+            size_hint: None, None
+            height: 30
+            width: 42
+            pos_hint: {'center_x': .975, 'center_y': .971}
+            on_press: 
+                app.close_tab(self, welcome_tab)

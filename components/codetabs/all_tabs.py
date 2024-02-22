@@ -3,9 +3,8 @@ from kivy.uix.label import Label
 from kivy.uix.tabbedpanel import TabbedPanelItem, TabbedPanelHeader
 from kivy.uix.togglebutton import ToggleButtonBehavior
 from kivy.clock import Clock
-from kivy.event import EventDispatcher
 from kivy.properties import StringProperty, NumericProperty, BooleanProperty, ObjectProperty
-
+import time
 Builder.load_file("components/codetabs/all_tabs.kv")
 
 
@@ -17,15 +16,29 @@ Builder.load_file("components/codetabs/all_tabs.kv")
 #     def add_widget_(self):
 #         self.add_widget(WelcomeTab())
 
-class HeaderForTabs(TabbedPanelHeader):
-    custom_tab_name = StringProperty()
-    action = ObjectProperty()
+# currently unused
+# class HeaderForTabs(TabbedPanelHeader):
+#     custom_tab_name = StringProperty()
+#     action = ObjectProperty()
         
 
 
 class WelcomeTab(TabbedPanelItem):
+    greetings = StringProperty()
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        time_ = time.localtime().tm_hour
+        if  11 > time_ > 5:
+            self.greetings = "Hello, Good morning😎😁😥"
+        elif time_ < 13:
+            self.greetings = "Hello, Good afternoon😎😁😥"
+        elif time_ < 20:
+            self.greetings = "Hello, Good evening😎😁😥"
+        elif time_ < 24:
+            self.greetings = "Hello, Good night😎😁😥"
+        else:
+            self.greetings = "it's time to sleep😴"
+        
 
     # callback from header or welcome page to popup textinput
     def create_new_file_popup(self):
@@ -81,9 +94,3 @@ class CodeLineCounter(ToggleButtonBehavior, Label):
 
     def on_row_number_conter_for_code(self):
         pass
-    # def on_kv_post(self, base_widget):
-    #     print(base_widget, "rohit", self)
-
-
-
-        

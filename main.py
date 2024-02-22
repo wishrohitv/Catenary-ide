@@ -2,9 +2,12 @@ from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.label import Label
 # from kivy.uix.filechooser import FileChooser
+from kivy.clock import Clock
 from kivy.core.window import Window
 from plyer import filechooser
 from kivy.app import App
+
+from components.sidemenu.side_menu import SideMenu
 
 
 class EditorApp(App):
@@ -15,16 +18,46 @@ class EditorApp(App):
 
         return Builder.load_file("main.kv")
 
-    # code logic
+    # code logic starts here --
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super(EditorApp, self).__init__(**kwargs)
         self.engine = None
 
+        # ============== logic for explorer window ==========
+        # sheduling tab_container to remove on starting explorer window
+        Clock.schedule_once(self.remove_explore_window, .1)
+
+    def remove_explore_window(self, args):
+        if len(self.root.ids.tab_container.children) == 2:
+            self.root.ids.tab_container.remove_widget(self.root.ids.splliter_sidemenutabswindows)
+
+    # side tabs state mananger if tab is opend or not
+    def on_left_tab_state(self, instance):
+        # print(instance.name, instance.state)
+        side_tab_list = self.root.ids.tab_container.children
+        # print(side_tab_list)
+
+        if len(side_tab_list) == 2:
+            if instance.state == "normal":
+                self.root.ids.tab_container.remove_widget(self.root.ids.splliter_sidemenutabswindows)
+
+        if len(side_tab_list) < 2:
+            if instance.state == "down":
+                self.root.ids.tab_container.add_widget(self.root.ids.splliter_sidemenutabswindows, 1)
+
+    # ================================================
+
+    # windows files state manager selection on code tabs explorer
+    def explorer_tabs(self, instance):
+        print(instance.text)
+        # --------------------------------------
+
+    # opening file from chooser
     def open_file_from_header(self):
         filechooser.open_file(on_selection=self.selected_files)
 
     def selected_files(self, file_path):
-        from components.codetabs.all_tabs import CustomTabs, HeaderForTabs
+        from components.codetabs.all_tabs import CustomTabs
 
         if len(file_path) != 0:
             self.file_path = file_path[0]
@@ -32,18 +65,8 @@ class EditorApp(App):
             file_name = self.file_path.split("\\")
             with open(self.file_path) as f:
                 s = f.read()
-
-            ch = HeaderForTabs(custom_tab_name=f'{file_name[-1]} [ref=s]X[/ref]',
-                             action=self.close_tabsT)
-            ch.content = CustomTabs(code_text=s)
-            self.root.ids.all_tabs_bar.add_widget(ch)
-
-    def close_tabsT(self, obj, ref):
-        print('close pressed', ref)
-        self.root.ids.all_tabs_bar.remove_widget(obj.parent)
-        # self.switch_to(self.tab_list[-1])
-
-        # self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=s))
+        # self.root.ids.all_tabs_bar.tab_width = 
+        self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=s))
 
     # def save_file(self, args):
     #     with open(self.file_path, "w") as f:
@@ -56,13 +79,13 @@ class EditorApp(App):
         welcome.create_new_file_popup()
 
     def save_text_file(self, file_name):
-        with open("code.js", "r") as f:
+        with open("./dummy_files/code.js", "r") as f:
             s = f.read()
             n = s.splitlines()
 
         from components.codetabs.all_tabs import CustomTabs
         from components.codetabs.all_tabs import CodeLineCounter
-        
+
         customtabs = CustomTabs()
 
         # code line counter
@@ -86,7 +109,6 @@ class EditorApp(App):
             panel.switch_to(panel.tab_list[0])
         else:
             panel.clear_widgets()
-
 
     # run code function
     def run_code(self):
