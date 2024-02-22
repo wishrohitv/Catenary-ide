@@ -4,4 +4,5 @@
 
 Screenshot -
 
-![image](https://github.com/wishrohitv/CatxCode-ide/assets/126248971/6d39892d-17f9-46c7-a51e-0342999f26b4)
+![image](https://github.com/wishrohitv/CatxCode-ide/assets/126248971/8a58d3f0-003d-4501-ab25-f1ba784199a5)
+
