@@ -40,7 +40,7 @@
 <CustomTabs>:
     id: custom_tab
     text: f"{root.custom_tab_name} [ref=n]✖[/ref]"
-    font_name: "seguiemj.ttf"
+    font_name: "./assets/fonts/seguiemj.ttf"
     on_ref_press: app.close_tab(self, custom_tab)
     markup: True
     background_color: "#31044e"
@@ -94,7 +94,7 @@
     color: "blue"
     size_hint_x: .4
     pos_hint: {'center_x': .5}
-    font_name: r"assets\fonts\seguiemj.ttf"
+    font_name: "./assets/fonts/seguiemj.ttf"
     canvas.before:
         Color:
             rgba: (208/255, 5/255, 5/255,1)
@@ -120,16 +120,20 @@
             spacing: 20
             Label:
                 text: root.greetings
-                font_name: "seguiemj.ttf"
+                font_name: "./assets/fonts/seguiemj.ttf"
                 color: "black"
-                text_size: self.size
                 halign: "center"
                 size_hint_y: None
                 height: "70dp"
+                text_size: self.size
                 font_size: "33sp"
 
             RoundedBoxLabel:                  
                 text: "[ref=n]Create New File[/ref]"
+                text_size: self.size
+                font_size: "18sp"
+                halign: "center"
+                valign: "middle"
                 on_ref_press: 
                     root.create_new_file_popup()
                     colors = ["green", "yellow", "purple", "red"]
@@ -137,10 +141,18 @@
 
             RoundedBoxLabel:                  
                 text: "[ref=n]Create folder[/ref]"
+                text_size: self.size
+                font_size: "18sp"
+                halign: "center"
+                valign: "middle"
                 on_ref_press: print("fjil")
 
             RoundedBoxLabel:
                 text: "[ref=n]Drag and Drop[/ref]"
+                text_size: self.size
+                font_size: "18sp"
+                halign: "center"
+                valign: "middle"
                 on_ref_press: print("drag")
 
             Widget:

@@ -40,7 +40,8 @@ class EditorApp(App):
 
     # windows files state manager selection on code tabs explorer
     def explorer_tabs(self, instance):
-        print(instance.text)
+        # print(instance.text)
+        pass
         # --------------------------------------
 
     # opening file from chooser

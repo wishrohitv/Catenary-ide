@@ -81,27 +81,48 @@
                 height: self.minimum_height
                 Explorer:
             # files and folders
-            # FileNameLabel
             FoldersNameLabel:
 
 
 
 <FileNameLabel>:
+    orientation: 'horizontal' 
+    spacing: '6dp' 
+    size_hint: 1, None
+    width: self.minimum_width
+    height: "34dp"  
+    # on_release: 
+    #     app.explorer_tabs(self)
     canvas.before:
         Color:
-            rgba: (0, 0, 0, 0) if self.state == "normal" else (75/255, 53/255, 78/255, .7)
+            rgba: (0, 0, 0, 0) # if self.state == "normal" else (75/255, 53/255, 78/255, .7)
         RoundedRectangle:
             size: self.size
             pos: self.pos
             radius: [5,]
-    padding: "20dp"
-    group: "file_and_folders"
-    text: root.file_and_folders_name
-    size_hint: None, None
-    width: self.texture_size[0] # not final 
-    height: "34dp"
-    on_release: 
-        app.explorer_tabs(self)
+    StencilView:
+        size_hint: None, None
+        width: "25dp"
+        height: "25dp"
+        pos_hint: {'center_y':.5}
+        # allow_stretch: True
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                source:  f"./assets/lang_icon/{root.file_and_folders_icon}"
+                radius: [6,]
+        # Image:
+        #     id: lang_icon
+        #     source:  "./assets/lang_icon/java.png"
+    Label
+        group: "file_and_folders"
+        text: root.file_and_folders_name
+        size_hint: None, None
+        width: self.texture_size[0] # not final 
+        height: "34dp"
 
 <Explorer@Label>:
     canvas.before:
@@ -118,6 +139,4 @@
 
 <FoldersNameLabel>:
     orientation: 'vertical'
-
-
 
