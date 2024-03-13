@@ -19,6 +19,7 @@
     LeftTabs:
         id: files
         name: "files"
+        state: "down" # on starting tho open explorar show as down state
         pos_hint: {'center_y': .7}
         group: "side_tabs"
         size_hint: 1, None
@@ -96,7 +97,8 @@
     padding: "20dp"
     group: "file_and_folders"
     text: root.file_and_folders_name
-    size_hint: 1, None
+    size_hint: None, None
+    width: self.texture_size[0] # not final 
     height: "34dp"
     on_release: 
         app.explorer_tabs(self)
@@ -110,7 +112,7 @@
             rounded_rectangle: (self.x, self.y, self.width, self.height, 5)
     text: "WORKSPACE"
     size_hint: 1, None
-    font_name: r'assets\fonts\Poppins-BoldItalic.ttf'
+    font_name: './assets/fonts/Poppins-BoldItalic.ttf'
     height: "34dp"
 
 

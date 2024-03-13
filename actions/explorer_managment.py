@@ -9,6 +9,7 @@ def create_file_tree(folder_path):
             create_file_tree(os.path.join(folder_path, f)) for f in os.listdir(folder_path)
         ]
     else:
+        file_tree["type"] = "file"
         file_tree["children"] = []
     return file_tree
 

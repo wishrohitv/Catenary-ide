@@ -1,6 +1,6 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.togglebutton import ToggleButtonBehavior
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ColorProperty
 from kivy.uix.image import Image
 from kivy.lang import Builder
 from kivy.factory import Factory
@@ -10,7 +10,7 @@ import os, json
 
 from actions.explorer_managment import create_file_tree
 
-Builder.load_file("components\sidemenu\side_menu.kv")
+Builder.load_file("./components/sidemenu/side_menu.kv")
 
 
 class SideMenu(BoxLayout):
@@ -44,7 +44,7 @@ class SideMenuTabWindows(BoxLayout):
     #         self.ids.explorer_tabs.add_widget(FileNameLabel(file_and_folders_name=files))
 
 
-class FileNameLabel(ToggleButtonBehavior, Label):
+class FileNameLabel(ToggleButtonBehavior, Label): # also for folder
     file_and_folders_name = StringProperty()
 
 
@@ -53,7 +53,6 @@ class FoldersNameLabel(TreeView):
         super().__init__(**kwargs)
         # self.root.text = "rohit"
         # self.root_options=dict(text='Tree One')
-        self.hide_root=False
         self.indent_level=18
         folder_path = "./dummy_files"
         self.hide_root = True
@@ -64,10 +63,10 @@ class FoldersNameLabel(TreeView):
 
     def populate_file_tree(self, parent, folder_tree):
         if parent is None:
-            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"]))
+            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"], color=[1,0,0,1] if folder_tree["type"] == "folder" else [0,1,0,1]))
 
         else:
-            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"]), parent)
+            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"], color=[1,0,0,1] if folder_tree["type"] == "folder" else [0,1,0,1]), parent)
 
         for child_node in folder_tree["children"]:
             self.populate_file_tree(tree_node, child_node)
@@ -78,5 +77,5 @@ class FoldersNameLabel(TreeView):
 class CustomTreeNode(FileNameLabel, TreeViewNode):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.even_color = [0,0,0,0]
+        self.even_color = [0,1,0,0]
         self.color_selected = [0,0,0,0]

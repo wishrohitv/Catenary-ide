@@ -1,7 +1,6 @@
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.label import Label
-# from kivy.uix.filechooser import FileChooser
 from kivy.clock import Clock
 from kivy.core.window import Window
 from plyer import filechooser
@@ -22,14 +21,6 @@ class EditorApp(App):
     def __init__(self, **kwargs):
         super(EditorApp, self).__init__(**kwargs)
         self.engine = None
-
-        # ============== logic for explorer window ==========
-        # sheduling tab_container to remove on starting explorer window
-        Clock.schedule_once(self.remove_explore_window, .1)
-
-    def remove_explore_window(self, args):
-        if len(self.root.ids.tab_container.children) == 2:
-            self.root.ids.tab_container.remove_widget(self.root.ids.splliter_sidemenutabswindows)
 
     # side tabs state mananger if tab is opend or not
     def on_left_tab_state(self, instance):
