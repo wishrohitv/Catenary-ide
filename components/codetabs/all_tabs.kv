@@ -13,7 +13,7 @@
     text: f"{root.row_number_counter_for_code}"
     font_size: 12
     size_hint: None, None
-    width: "32dp"
+    width: "37dp"
     height: "20dp"
     canvas.before:
         Color:
@@ -59,19 +59,20 @@
             BoxLayout:
                 size_hint_y: None
                 height: self.minimum_height
-                BoxLayout:
-                    spacing: "5dp"
-                    halign: "top"
+                GridLayout:
+                    cols: 1
+                    spacing: "4.3dp"
+                    padding: ('0dp', '6dp', '0dp', '0dp')
                     id: code_line_counter_container
-                    orientation: "vertical"
                     size_hint_x: None
-                    width: "32dp"
+                    width: "37dp"
 
                     
                 CodeInput:
                     id: code_input
                     text: root.code_text
                     # set_cursor: "ibeam"
+                    do_wrap: False
                     font_size: 18
                     cursor: (3,1)
                     cursor_width: "3sp"
@@ -166,3 +167,4 @@
             pos_hint: {'center_x': .975, 'center_y': .971}
             on_press: 
                 app.close_tab(self, welcome_tab)
+

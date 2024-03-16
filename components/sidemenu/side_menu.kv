@@ -67,35 +67,34 @@
             size: self.size
     size_hint: 1, 1
     ScrollView:
-        do_scroll_x: False
         do_scroll_y: True
+        #effect_cls: "ScrollEffect"
         BoxLayout:
-            id: explorer_tabs
             orientation: "vertical"
             size_hint_y: None
             height: self.minimum_height
-            # width: "240dp"
-            BoxLayout:
-                padding: "5dp"
-                size_hint_y: None
-                height: self.minimum_height
-                Explorer:
+            # BoxLayout:
+            #     orientation: "vertical"
+            #     padding: "5dp"
+            #     size_hint_y: None
+            #     height: self.minimum_height
+            Explorer: # label
             # files and folders
             FoldersNameLabel:
 
-
-
+# file and folder name in tree view
 <FileNameLabel>:
     orientation: 'horizontal' 
     spacing: '6dp' 
     size_hint: 1, None
     width: self.minimum_width
     height: "34dp"  
-    # on_release: 
-    #     app.explorer_tabs(self)
+    group: "file_and_folders"
+    on_release: 
+        app.explorer_tabs(self)
     canvas.before:
         Color:
-            rgba: (0, 0, 0, 0) # if self.state == "normal" else (75/255, 53/255, 78/255, .7)
+            rgba: (0, 0, 0, 0) if self.state == "normal" else (75/255, 53/255, 78/255, .7)
         RoundedRectangle:
             size: self.size
             pos: self.pos
@@ -118,7 +117,6 @@
         #     id: lang_icon
         #     source:  "./assets/lang_icon/java.png"
     Label
-        group: "file_and_folders"
         text: root.file_and_folders_name
         size_hint: None, None
         width: self.texture_size[0] # not final 
@@ -132,8 +130,8 @@
             width: .4
             rounded_rectangle: (self.x, self.y, self.width, self.height, 5)
     text: "WORKSPACE"
-    size_hint: 1, None
     font_name: './assets/fonts/Poppins-BoldItalic.ttf'
+    size_hint: 1, None
     height: "34dp"
 
 

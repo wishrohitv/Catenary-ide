@@ -40,13 +40,15 @@ class EditorApp(App):
 
     # windows files state manager selection on code tabs explorer
     def explorer_tabs(self, instance):
-        # print(instance.text)
+        # print(instance.file_and_folders_name)
         pass
         # --------------------------------------
 
     # opening file from chooser
     def open_file_from_header(self):
-        filechooser.open_file(on_selection=self.selected_files)
+        # filechooser.open_file(on_selection=self.selected_files)
+        from components.kivyfilechooser.file_chooser import ModalFileChooser
+        Factory.ModalFileChooser().open()
 
     def selected_files(self, file_path):
         from components.codetabs.all_tabs import CustomTabs

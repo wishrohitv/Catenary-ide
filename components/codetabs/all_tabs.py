@@ -64,13 +64,14 @@ class CustomTabs(TabbedPanelItem):
         
     # update every new line counter
     def _on_text(self, instance):
-        nums = instance.text.splitlines()
-        self.new_code_lines = len(nums)
-        # print(self.new_code_lines)
+        nums = instance.text.split("\n")
+        self.ids.code_line_counter_container.clear_widgets()
 
-        if self.existing_code_lines < self.new_code_lines:
-            self.ids.code_line_counter_container.add_widget(CodeLineCounter(row_number_counter_for_code=self.new_code_lines), -1)
-            print(self.new_code_lines)
+        self.new_code_lines = len(nums)
+
+        for i in range(1, self.new_code_lines+1):
+            self.ids.code_line_counter_container.add_widget(CodeLineCounter(row_number_counter_for_code=i))
+
 
 
     # when file intilize 
