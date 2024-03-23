@@ -1,0 +1,10 @@
+Kivy>=2.3.0
+plyer>=2.1.0
+Pillow>=9.4.0
+docutils
+kivy-deps.angle
+kivy-deps.glew
+kivy-deps.sdl2
+Kivy-Garden
+pygments
+pypiwin32
