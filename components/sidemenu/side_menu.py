@@ -61,12 +61,11 @@ class FoldersNameLabel(TreeView):
             folder_tree = json.load(f)
         self.populate_file_tree(None, folder_tree)
 
-    def select_node(self, node):
-        # print(node.file_and_folders_name)
-        # p = node.parent
-        # print(p)
-        pass
-
+    # def select_node(self, node):
+    #     print(node.text)
+        lang_icon_list = ['py', 'c', 'c++','cpp', 'cxx', 'js', 'java']
+        
+    
 
     def populate_file_tree(self, parent, folder_tree):
         # , color=[1,0,0,1] if folder_tree["type"] == "folder" else [0,1,0,1]
@@ -93,7 +92,8 @@ class FoldersNameLabel(TreeView):
             case "py":
                 return "python.png"         
         return "file.png"
-
+        
+# currentaly unused
 class CustomTreeNode(FileNameLabel, TreeViewNode):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
