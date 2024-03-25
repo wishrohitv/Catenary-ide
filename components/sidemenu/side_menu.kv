@@ -94,7 +94,7 @@
         app.explorer_tabs(self)
     canvas.before:
         Color:
-            rgba: (0, 0, 0, 0) if self.state == "normal" else (75/255, 53/255, 78/255, .7)
+            rgba: (0, 0, 0, 0) # if self.state == "normal" else (75/255, 53/255, 78/255, .7)
         RoundedRectangle:
             size: self.size
             pos: self.pos

@@ -50,11 +50,14 @@ class WelcomeTab(TabbedPanelItem):
 class CustomTabs(TabbedPanelItem):
     custom_tab_name = StringProperty()
     code_text = StringProperty()
-    existing_code_lines = NumericProperty()
-    new_code_lines = NumericProperty()
+    
+    initial_code_line = NumericProperty()
+    current_code_line = NumericProperty()
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        # self.initial_code_line = None
+        # self.current_code_line = None
 
     # def close_tab(self, value, custom_tab):
     #     try:
@@ -65,22 +68,37 @@ class CustomTabs(TabbedPanelItem):
     # update every new line counter
     def _on_text(self, instance):
         nums = instance.text.split("\n")
-        self.ids.code_line_counter_container.clear_widgets()
 
-        self.new_code_lines = len(nums)
+        # updating current number
+        self.current_code_line = len(nums)
 
-        for i in range(1, self.new_code_lines+1):
-            self.ids.code_line_counter_container.add_widget(CodeLineCounter(row_number_counter_for_code=i))
+        if self.initial_code_line < self.current_code_line:
+            # self.ids.code_line_counter_container.clear_widgets()
 
+
+            # for i in range(1, self.current_code_line+1):
+            #     self.ids.code_line_counter_container.add_widget(CodeLineCounter(row_number_counter_for_code=i))
+            self.ids.code_line_counter_container.add_widget(CodeLineCounter(row_number_counter_for_code=self.current_code_line))
+            
+            # updating initial number
+            self.initial_code_line = len(nums)
+
+            # removing numbers if deleted
+        if self.current_code_line > self.initial_code_line:
+            # updating initial number
+            # self.initial_code_line = len(nums)
+            print(self.initial_code_line, self.current_code_line)
+
+            self.ids.code_line_counter_container.clear_widgets()
 
 
     # when file intilize 
     def on_kv_post(self, base_widget):
         code_lines = base_widget.ids.code_input.text
         nums = code_lines.splitlines()
-        self.existing_code_lines = len(nums)
+        self.initial_code_line = len(nums)
 
-        for i in range(1, self.existing_code_lines + 1):
+        for i in range(1, self.initial_code_line + 1):
             self.ids.code_line_counter_container.add_widget(CodeLineCounter(row_number_counter_for_code=i))
         
         Clock.schedule_once(self.focus_cursor, .3)
@@ -95,3 +113,12 @@ class CodeLineCounter(ToggleButtonBehavior, Label):
 
     def on_row_number_conter_for_code(self):
         pass
+
+class ImageTabs(TabbedPanelItem):
+    image_tab_name = StringProperty()
+    image_source = StringProperty()
+    
+class MediaTabs(TabbedPanelItem):
+    media_tab_name = StringProperty()
+    media_source = StringProperty()
+    

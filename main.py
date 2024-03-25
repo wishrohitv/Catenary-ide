@@ -51,16 +51,35 @@ class EditorApp(App):
         Factory.ModalFileChooser().open()
 
     def selected_files(self, file_path):
-        from components.codetabs.all_tabs import CustomTabs
+        from actions.file_type_checker import get_file_type
 
         if len(file_path) != 0:
             self.file_path = file_path[0]
             self.title += f" {self.file_path}"
             file_name = self.file_path.split("\\")
-            with open(self.file_path) as f:
-                s = f.read()
+            match get_file_type(self.file_path):
+                case "Text_lang":
+                    self.text_lang_tab(file_name, self.file_path)
+                case "Video":
+                    self.media_tab(file_name, self.file_path)
+                case "Image":
+                    self.image_tab(file_name, self.file_path)
+    
+    def text_lang_tab(self, file_name, s):
+        from components.codetabs.all_tabs import CustomTabs                  
+        with open(self.file_path) as f:
+            s = f.read()
         # self.root.ids.all_tabs_bar.tab_width = 
         self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=s))
+
+    def media_tab(self, file_name, s):
+        from components.codetabs.all_tabs import MediaTabs, ImageTabs
+        self.root.ids.all_tabs_bar.add_widget(MediaTabs(media_tab_name=file_name[-1], media_source=s))
+        
+    def image_tab(self, file_name, s):
+        from components.codetabs.all_tabs import ImageTabs
+        self.root.ids.all_tabs_bar.add_widget(ImageTabs(image_tab_name=file_name[-1], image_source=s))
+
 
     # def save_file(self, args):
     #     with open(self.file_path, "w") as f:

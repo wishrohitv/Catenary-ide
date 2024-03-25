@@ -9,15 +9,14 @@
 
 
 <CodeLineCounter>:
-    padding: 0,4,0,0
     text: f"{root.row_number_counter_for_code}"
-    font_size: 12
+    font_size: "16sp"
     size_hint: None, None
     width: "37dp"
     height: "20dp"
     canvas.before:
         Color:
-            rgba: (144/255, 114/255, 175/255, 0) if self.state == "normal" else (75/255, 0, 0, .8)
+            rgba: (144/255, 114/255, 175/255, 0) if self.state == "normal" else (200/255, 0, 0, .8)
         RoundedRectangle:
             size: self.size
             pos: self.pos    
@@ -61,7 +60,7 @@
                 height: self.minimum_height
                 GridLayout:
                     cols: 1
-                    spacing: "4.3dp"
+                    spacing: "4.1dp"
                     padding: ('0dp', '6dp', '0dp', '0dp')
                     id: code_line_counter_container
                     size_hint_x: None
@@ -73,7 +72,7 @@
                     text: root.code_text
                     # set_cursor: "ibeam"
                     do_wrap: False
-                    font_size: 18
+                    font_size: "18sp"
                     cursor: (3,1)
                     cursor_width: "3sp"
                     allow_copy: True
@@ -168,3 +167,30 @@
             on_press: 
                 app.close_tab(self, welcome_tab)
 
+
+<ImageTabs>:
+    id: media_tab
+    text: f"{root.image_tab_name} [ref=n]✖[/ref]"
+    font_name: "./assets/fonts/seguiemj.ttf"
+    on_ref_press: app.close_tab(self, media_tab)
+    markup: True
+    BoxLayout:
+        orientation:'vertical'
+        size_hint: .8,.8
+        pos_hint: {'centerX': .5, 'center_y': .5}
+        Image:
+            source: root.image_source
+            
+<MediaTabs>:
+    id: media_tab
+    text: f"{root.media_tab_name} [ref=n]✖[/ref]"
+    font_name: "./assets/fonts/seguiemj.ttf"
+    on_ref_press: app.close_tab(self, media_tab)
+    markup: True
+    BoxLayout:
+        orientation:'vertical'
+        size_hint: .8,.8
+        pos_hint: {'centerX': .5, 'center_y': .5}
+        VideoPlayer:
+            source: root.media_source
+            state: "pause"
