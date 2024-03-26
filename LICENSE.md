@@ -1,21 +1,34 @@
-MIT License
+Custom Royalty-Based License
+Version 1.0, 26/03/2024
 
 Copyright (c) 2024 Rohit Vishwakarma
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Definitions:
+   - "Software" refers to the software product licensed under this agreement, including all its associated files and documentation.
+   - "You" refers to the individual or entity exercising the rights granted by this license.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. Grant of License:
+   This license grants you the right to use, copy, modify, and distribute the Software, provided that you comply with the terms outlined in this agreement.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+3. Personal Use:
+   - You may use the Software for personal purposes without any obligation to pay royalties.
+
+4. Commercial Use:
+   - For commercial purposes, including selling or distributing products or services that directly or indirectly use the Software, a royalty fee is required. Contact us for details.
+   - Educational and personal use of the Software is permitted without any royalty obligations.
+
+5. Distribution:
+   You may distribute the Software, either in its original form or modified, provided that:
+   - You include this license and copyright notice in all copies of the Software.
+   - You do not impose any additional restrictions beyond those in this license.
+
+6. Attribution:
+   You must retain the original copyright notice and any other notices included in the Software.
+
+7. No Warranty:
+   THE SOFTWARE IS PROVIDED "AS IS," WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+8. Acceptance:
+   By using, copying, modifying, or distributing the Software, you agree to be bound by the terms of this license.
+
+If you do not agree to the terms of this license, you must not use, copy, modify, or distribute the Software.
