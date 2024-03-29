@@ -8,10 +8,12 @@ from functools import partial
 
 Builder.load_file("./components/terminal/py_terminal.kv")
 
+
 class Terminal(BoxLayout):
     console_text = StringProperty(f"root@{os.getcwd()}$~ ")
     # n = "root@user$~ "
     n = f"root@{os.getcwd()}$~ "
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -22,7 +24,7 @@ class Terminal(BoxLayout):
         raw_cm = cm.text
         all_line = raw_cm.split("\n")
         last_line = all_line[-1]
-        
+
         code = last_line.split(" ")
 
         code.remove(f"root@{os.getcwd()}$~")
@@ -41,12 +43,8 @@ class Terminal(BoxLayout):
             try:
                 s = subprocess.run(code, capture_output=True, shell=True)
                 return s.stdout.decode()
-                cm.focus = True
 
             except Exception as e:
                 return str(e)
-                cm.focus = True
-
-        
 
 # runTouchApp(Terminal())
