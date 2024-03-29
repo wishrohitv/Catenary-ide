@@ -55,27 +55,30 @@ Builder.load_string("""
 
 """)
 
+
 class CreatFileTextInput(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.popup = None
 
     def open_popup_textinput(self):
-        self.popup = Popup(title='Create file', 
-                            title_color="green", 
-                            title_size=18,
-                            content=self,
-                            auto_dismiss=True, 
-                            size_hint=(.45, .21), 
-                            separator_color="purple", 
-                            background_color=(0,0,1,1))
+        self.popup = Popup(title='Create file',
+                           title_color="green",
+                           title_size=18,
+                           content=self,
+                           auto_dismiss=True,
+                           size_hint=(None, None),
+                           height="100",
+                           width="320dp",
+                           pos_hint={'center_y': .8},
+                           separator_color="purple",
+                           background_color=(0, 0, 1, 1))
 
         self.popup.open()
         Clock.schedule_once(self.focus_text_input, 0.3)
 
     def close_popup_textinput(self):
         self.popup.dismiss()
-        
 
     def focus_text_input(self, dt):
         self.ids.file_name.focus = True
