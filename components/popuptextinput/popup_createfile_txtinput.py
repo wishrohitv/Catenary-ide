@@ -37,20 +37,20 @@ Builder.load_string("""
         #         radius: [2]
     Button:
         text: "create"
-        font_size: 20
+        font_size: "18sp"
         background_color: "purple"
         background_normal: ''
         size_hint_x: .23
         on_press: 
             app.save_text_file(file_name.text)
             root.close_popup_textinput()
-        # canvas.before:
-        #     Color:
-        #         rgba: (0,1,0,1)
-        #     RoundedRectangle:
-        #         pos: self.pos
-        #         size: self.size
-        #         radius: [2]
+        canvas.before:
+            Color:
+                rgba: (0,1,0,1)
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [6,]
 
 
 """)
