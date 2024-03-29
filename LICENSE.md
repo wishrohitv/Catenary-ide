@@ -11,11 +11,11 @@ Copyright (c) 2024 Rohit Vishwakarma
    This license grants you the right to use, copy, modify, and distribute the Software, provided that you comply with the terms outlined in this agreement.
 
 3. Personal Use:
-   - You may use the Software for personal purposes without any obligation to pay royalties.
+   - You may use the Software for personal
+   or educational purposes without any obligation to pay royalties.
 
 4. Commercial Use:
    - For commercial purposes, including selling or distributing products or services that directly or indirectly use the Software, a royalty fee is required. Contact us for details.
-   - Educational and personal use of the Software is permitted without any royalty obligations.
 
 5. Distribution:
    You may distribute the Software, either in its original form or modified, provided that:

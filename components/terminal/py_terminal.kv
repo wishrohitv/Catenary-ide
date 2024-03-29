@@ -1,0 +1,16 @@
+<Terminal>:
+    ScrollView:
+        do_scroll_y: True
+        TextInput:
+            text: root.console_text
+            font_size: "18sp"
+            markup: True
+            foreground_color: (1,1,1,1)
+            cursor_color: 0,1,0,1
+            cursor_width: "4sp"
+            # foreground_color: (247/255,9/255,211/255,1)
+            multiline: False
+            selection_color: 1,0,1,.23
+            background_color: 75/255, 53/255, 78/255, 1
+            background_normal: ''
+            on_text_validate: root._on_text_validate(self)

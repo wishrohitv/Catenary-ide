@@ -20,7 +20,7 @@ Builder.load_string("""
         cursor_color: 0,1,0,1
         cursor_width: "4sp"
         foreground_color: (247/255,9/255,211/255,1)
-        font_size: 20
+        font_size: "18sp"
         multiline: False
         selection_color: 1,0,1,.23
         background_color: .4,.01,.4,.5

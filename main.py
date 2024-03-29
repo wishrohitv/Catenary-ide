@@ -8,7 +8,6 @@ from kivy.app import App
 
 from components.sidemenu.side_menu import SideMenu
 
-
 class EditorApp(App):
     def build(self):
         # front ui
@@ -16,6 +15,10 @@ class EditorApp(App):
         self.icon = "assets/icons/icon-x.jpg"
 
         return Builder.load_file("main.kv")
+    
+    def on_start(self):
+        Window.softinput_mode = 'below_target'
+        
 
     # code logic starts here --
     def __init__(self, **kwargs):
