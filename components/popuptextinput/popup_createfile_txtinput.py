@@ -64,11 +64,11 @@ class CreatFileTextInput(BoxLayout):
     def open_popup_textinput(self):
         self.popup = Popup(title='Create file',
                            title_color="green",
-                           title_size=18,
+                           title_size="16sp",
                            content=self,
                            auto_dismiss=True,
                            size_hint=(None, None),
-                           height="100",
+                           height="110dp",
                            width="320dp",
                            pos_hint={'center_y': .8},
                            separator_color="purple",
