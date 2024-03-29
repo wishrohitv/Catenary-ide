@@ -42,12 +42,10 @@ class Terminal(BoxLayout):
             try:
                 s = subprocess.run(code, capture_output=True, shell=True)
                 Clock.schedule_once(self.focus_terminal, 0.3)
-                print(s.stdout.decode())
                 return s.stdout.decode()
 
             except Exception as e:
                 Clock.schedule_once(self.focus_terminal, 0.3)
-                print(e)
                 return str(e)
 
     def focus_terminal(self, dt):
