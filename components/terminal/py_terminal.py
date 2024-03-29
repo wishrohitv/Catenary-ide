@@ -1,10 +1,9 @@
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
+import os
+import subprocess
 from kivy.clock import Clock
+from kivy.lang import Builder
 from kivy.properties import StringProperty
-from kivy.app import runTouchApp
-import subprocess, os
-from functools import partial
+from kivy.uix.boxlayout import BoxLayout
 
 Builder.load_file("./components/terminal/py_terminal.kv")
 
@@ -42,9 +41,16 @@ class Terminal(BoxLayout):
         else:
             try:
                 s = subprocess.run(code, capture_output=True, shell=True)
+                Clock.schedule_once(self.focus_terminal, 0.3)
+                print(s.stdout.decode())
                 return s.stdout.decode()
 
             except Exception as e:
+                Clock.schedule_once(self.focus_terminal, 0.3)
+                print(e)
                 return str(e)
+
+    def focus_terminal(self, dt):
+        self.ids.console.focus = True
 
 # runTouchApp(Terminal())
