@@ -44,16 +44,15 @@
     Widget:
     LeftTabs:
         source: "assets/navigations/terminal-white.jpg" if self.state == "normal" else "assets/navigations/terminal-pink.jpg" 
-        group: "side_tabs"
         size_hint: 1, None
         height: "50dp"
-        text: "files"
+        text: "terminal"
+        on_press: app.open_console(self)
     LeftTabs:
         source: "assets/navigations/info-white.jpg" if self.state == "normal" else "assets/navigations/info-pink.jpg" 
-        group: "side_tabs"
         size_hint: 1, None
         height: "50dp"
-        text: "files"
+        text: "about"
         on_press: root.app_info_open()
                     
 # side menu tabs windows for workspace and files explorer
@@ -68,6 +67,8 @@
     size_hint: 1, 1
     ScrollView:
         do_scroll_y: True
+        size_hint_x: 1
+        always_overscroll: True
         #effect_cls: "ScrollEffect"
         BoxLayout:
             orientation: "vertical"
