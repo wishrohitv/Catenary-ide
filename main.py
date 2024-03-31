@@ -39,6 +39,22 @@ class EditorApp(App):
             if instance.state == "down":
                 self.root.ids.tab_container.add_widget(self.root.ids.splliter_sidemenutabswindows, 1)
 
+    def open_console(self, instance):
+        from components.terminal.py_terminal import Terminal
+        terminal_ = self.root.ids.terminal_place
+        terminal_.remove_widget(self.root.ids.terminal)
+
+    # update cursor line and column
+    def update_bottom_header_label_cursor_point(self, pos, selected_text):
+        ln , col = pos
+        self.root.ids.cursor_pos.text = f'Ln {ln+1}, Col {col+1}'
+
+        if len(selected_text) > 0:
+            self.root.ids.selected_text.text = f"{len(selected_text)} selected"
+        else:
+            self.root.ids.selected_text.text = ""
+
+
     # ================================================
 
     # windows files state manager selection on code tabs explorer

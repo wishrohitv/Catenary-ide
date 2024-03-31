@@ -1,10 +1,12 @@
-#:import TopHeader components.topheader.top_header.TopHeader
-#:import SideMenu components.sidemenu.side_menu.SideMenu
-#:import SideMenuTabWindows components.sidemenu.side_menu.SideMenuTabWindows
-#:import WelcomeTab components.codetabs.all_tabs.WelcomeTab
-#:import Terminal components.terminal.py_terminal.Terminal
 Screen:
     # parent box
+    on_kv_post:
+        #:import TopHeader components.topheader.top_header.TopHeader
+        #:import SideMenu components.sidemenu.side_menu.SideMenu
+        #:import SideMenuTabWindows components.sidemenu.side_menu.SideMenuTabWindows
+        #:import WelcomeTab components.codetabs.all_tabs.WelcomeTab
+        #:import Terminal components.terminal.py_terminal.Terminal
+
     BoxLayout:
         orientation:'vertical'
         # header
@@ -49,18 +51,13 @@ Screen:
                 BoxLayout:
                     id: terminal_place
                     size_hint_y: None
-                    canvas.after:
-                        Color:
-                            rgba: 60/255, 48/255, 72/255, 1
-                        Line:
-                            width: 2
-                            rounded_rectangle: (self.x, self.y, self.width, self.height, 4)
                     # height: self.minimum_height
-                    height: "100dp"
+                    height: "150dp"
                     Splitter:
                         strip_size : '3pt'
                         sizable_from: "top"
                         Terminal:
+
                     
 
         # bottom bar
@@ -74,7 +71,13 @@ Screen:
                 Rectangle:
                     pos: self.pos
                     size: self.size
+            # BottomHeader:
             Label:
-                text: "python"
+                id: language
+                text: "plain text" #root.language
             Label:
-                text:'Ln 33, Col 29'
+                id: cursor_pos
+                text: 'Ln , Col '
+            Label:
+                id: selected_text
+                text: ""

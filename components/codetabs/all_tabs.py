@@ -5,8 +5,8 @@ from kivy.uix.togglebutton import ToggleButtonBehavior
 from kivy.clock import Clock
 from kivy.properties import StringProperty, NumericProperty, BooleanProperty, ObjectProperty
 import time
-Builder.load_file("components/codetabs/all_tabs.kv")
 
+Builder.load_file("components/codetabs/all_tabs.kv")
 
 # class AllTabs(TabbedPanel):
 #     def __init__(self, **kwargs):
@@ -56,8 +56,6 @@ class CustomTabs(TabbedPanelItem):
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        # self.initial_code_line = None
-        # self.current_code_line = None
 
     # def close_tab(self, value, custom_tab):
     #     try:

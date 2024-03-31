@@ -49,8 +49,6 @@
 
     BoxLayout:
         ScrollView:
-            do_scroll_y: True
-            do_scroll_x: True
             bar_width: "15dp"
             scroll_type: ['bars', 'content']
             bar_color: "purple"
@@ -72,8 +70,7 @@
                     text: root.code_text
                     # set_cursor: "ibeam"
                     do_wrap: False
-                    font_size: "18sp"
-                    cursor: (3,1)
+                    font_size: "18sp" 
                     cursor_width: "3sp"
                     allow_copy: True
                     selection_color: 1, 136/255, 237/255, .4
@@ -83,7 +80,13 @@
                     # foreground_color: (1,0,0,1)
                     background_color: (1,1,1,1) #"#302d2e"
                     border_color: "#f88fbd"
-                    on_text: root._on_text(self)
+                    on_text: 
+                        root._on_text(self)
+                        # print(self.cursor_pos)
+
+                    # update cursor line and column
+                    on_cursor:
+                        app.update_bottom_header_label_cursor_point(self.cursor, self.selection_text)
                     
 # for welcome tab
 <RoundedBoxLabel@Label>:
