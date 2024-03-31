@@ -7,7 +7,7 @@ Builder.load_string("""
 
 <CreatFileTextInput>:
     size_hint_y: None
-    height: "40dp"
+    height: "39dp"
     pos_hint: {'center_y': .5}
     spacing: 3
     padding: 1
@@ -38,7 +38,7 @@ Builder.load_string("""
     Button:
         text: "create"
         font_size: "18sp"
-        background_color: "purple"
+        background_color: 0,0,0,0 #"purple"
         background_normal: ''
         size_hint_x: .23
         on_press: 
@@ -46,11 +46,11 @@ Builder.load_string("""
             root.close_popup_textinput()
         canvas.before:
             Color:
-                rgba: (0,1,0,1)
+                rgba: (226/255,25/255,1,1) if self.state == "normal" else (226/255,25/255,1,1)
             RoundedRectangle:
                 pos: self.pos
                 size: self.size
-                radius: [6,]
+                radius: [4,]
 
 
 """)
