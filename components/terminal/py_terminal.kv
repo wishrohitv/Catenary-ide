@@ -1,19 +1,34 @@
 <Terminal>:
+    #:import Window kivy.core.window.Window
+    id: pytm
+    canvas.before:
+        Color:
+            rgba: 60/255, 48/255, 72/255, 1
+        Line:
+            width: 2
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 4)
     ScrollView:
-        do_scroll_y: True
-        do_scroll_x: True
+        effect_cls: "ScrollEffect"
         TextInput:
             id: console
+            size_hint: None,None
+            height:  self.minimum_height + 200 #Window.height
+            width: Window.width #self.height
             text: root.console_text
-            font_size: "18sp"
+            font_size: "15sp"
             markup: True
-            do_wrap: True
-            foreground_color: (1,1,1,1)
+            foreground_color: (1,1,1,1) #(247/255,9/255,211/255,1)
             cursor_color: 0,1,0,1
             cursor_width: "4sp"
-            # foreground_color: (247/255,9/255,211/255,1)
             multiline: False
             selection_color: 1,0,1,.23
             background_color: 60/255, 48/255, 72/255, 1
             background_normal: ''
-            on_text_validate: root._on_text_validate(self)
+            on_text_validate: 
+                root._on_text_validate(self)
+                # print(self.get_max_scroll_x())
+                # self.width = Window.width + self.get_max_scroll_x()
+
+            on_text: 
+                len_x = self.get_max_scroll_x()
+                root.update_textinput_width(self, self.width, len_x)
