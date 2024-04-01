@@ -14,13 +14,26 @@ Builder.load_string("""
         BoxLayout:
             size_hint: (1, None)
             height: "40dp"
+            padding: "8dp","4dp","4dp",0
             Label:
-                text: "Explorar"
+                text: "Explorer"
                 halign: "left"
                 valign: "middle"
                 text_size: self.size
-                on_touch_down: print(file_chooser_popup.pos)
-                on_touch_move:print(file_chooser_popup.pos) #file_chooser_popup.pos = self.pos
+                # on_touch_down: print(file_chooser_popup.pos)
+                # on_touch_move:print(file_chooser_popup.pos) #file_chooser_popup.pos = self.pos
+            Button:
+                #:set full False
+                text: '◻' if not full else "▫"
+                font_name: "./assets/fonts/seguiemj.ttf"
+                size_hint: (None, 1)
+                width: "60dp"
+                background_color: "gray"
+                background_nomal: ""
+                on_press: 
+                    # print(full)
+                    file_chooser_popup.size_hint = (1,1) if not full else (.8,.8)
+                    full = True if not full else False
             Button:
                 text: 'X'
                 on_press: root.close()
@@ -38,6 +51,7 @@ Builder.load_string("""
                 
             FileChooserListLayout:
         BoxLayout:
+            padding: "4dp",0,"4dp","4dp"
             size_hint: (1, None)
             height: "40dp"
 
@@ -56,10 +70,10 @@ Builder.load_string("""
                         
             Button:
                 text: "Ok"
+                size_hint: (.5,1)
                 on_press: 
                     fc.on_selection = app.selected_files(fc.selection)
                     root.close()
-                size_hint: (.5,1)
 """)
 
 
@@ -71,6 +85,10 @@ class ModalFileChooser(ModalView):
         self.size_hint = (.8,.8)
         if platform == "win":
             self.root_path = "C:/Users/user/Downloads"
+        elif platform == "android":
+            self.root_path = "/storage/emulated/0/"
+        elif platform == "linux":
+            self.root_path = "/home/"
 
     def close(self):
         self.dismiss()
