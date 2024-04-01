@@ -71,11 +71,16 @@ class EditorApp(App):
 
     def selected_files(self, file_path):
         from actions.file_type_checker import get_file_type
+        from actions.filepath_spliter import file_name_
 
         if len(file_path) != 0:
             self.file_path = file_path[0]
             self.title += f" {self.file_path}"
-            file_name = self.file_path.split("\\")
+
+            # file name form filepath
+            file_name = file_name_(self.file_path)
+
+            # adding to tabs
             match get_file_type(self.file_path):
                 case "Text_lang":
                     self.text_lang_tab(file_name, self.file_path)
@@ -88,7 +93,6 @@ class EditorApp(App):
         from components.codetabs.all_tabs import CustomTabs                  
         with open(self.file_path) as f:
             s = f.read()
-        # self.root.ids.all_tabs_bar.tab_width = 
         self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=s))
 
     def media_tab(self, file_name, s):
