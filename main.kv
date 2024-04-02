@@ -24,7 +24,9 @@ Screen:
                 SideMenu:
             BoxLayout:
                 orientation:'vertical'
+                id: tab_and_consle_container
                 BoxLayout:
+                    size_hint: 1,1
                     id: tab_container
                     # side menu Tab
                     Splitter:
@@ -48,15 +50,15 @@ Screen:
                             tab_height:"30dp"
                             # tabs: 
                             WelcomeTab:
-                BoxLayout:
+
+                # terminal window
+                Splitter:
                     id: terminal_place
-                    size_hint_y: None
-                    # height: self.minimum_height
-                    height: "150dp"
-                    Splitter:
-                        strip_size : '3pt'
-                        sizable_from: "top"
-                        Terminal:
+                    # id: terminal
+                    size_hint: 1,.4
+                    strip_size : '3pt'
+                    sizable_from: "top"
+                    Terminal:
 
                     
 

@@ -1,14 +1,16 @@
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.label import Label
-from kivy.clock import Clock
+from kivy.clock import Clock, mainthread
 from kivy.core.window import Window
 from plyer import filechooser
+import threading, time
 from kivy.app import App
 
 from components.sidemenu.side_menu import SideMenu
 
 class EditorApp(App):
+    console_open = True
     def build(self):
         # front ui
         self.title = "CodeEditor"
@@ -39,10 +41,16 @@ class EditorApp(App):
             if instance.state == "down":
                 self.root.ids.tab_container.add_widget(self.root.ids.splliter_sidemenutabswindows, 1)
 
-    def open_console(self, instance):
+    def open_console_and_close(self, instance):
         from components.terminal.py_terminal import Terminal
+        tab_and_console = self.root.ids.tab_and_consle_container
         terminal_ = self.root.ids.terminal_place
-        terminal_.remove_widget(self.root.ids.terminal)
+        if self.console_open:
+            tab_and_console.remove_widget(terminal_)
+            self.console_open = False
+        else:
+            tab_and_console.add_widget(terminal_)
+            self.console_open = True
 
     # update cursor line and column
     def update_bottom_header_label_cursor_point(self, pos, selected_text):
@@ -83,25 +91,32 @@ class EditorApp(App):
             # adding to tabs
             match get_file_type(self.file_path):
                 case "Text_lang":
-                    self.text_lang_tab(file_name, self.file_path)
+                    # self.text_lang_tab(file_name, self.file_path)
+                    t1 = threading.Thread(target=self.thredign, args=[file_name, self.file_path])
+                    t1.start()
                 case "Video":
                     self.media_tab(file_name, self.file_path)
                 case "Image":
                     self.image_tab(file_name, self.file_path)
     
-    def text_lang_tab(self, file_name, s):
-        from components.codetabs.all_tabs import CustomTabs                  
-        with open(self.file_path) as f:
-            s = f.read()
-        self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=s))
+    def thredign(self,file_name, filepath):
+        with open(filepath) as f:
+            content = f.read()
+        self.text_lang_tab(file_name, content)
+    @mainthread
+    def text_lang_tab(self, file_name, content):
+        from components.codetabs.all_tabs import CustomTabs               
+        # with open(file_path) as f:
+        #     s = f.read()
+        self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=content))
 
-    def media_tab(self, file_name, s):
+    def media_tab(self, file_name, file_path):
         from components.codetabs.all_tabs import MediaTabs, ImageTabs
-        self.root.ids.all_tabs_bar.add_widget(MediaTabs(media_tab_name=file_name[-1], media_source=s))
+        self.root.ids.all_tabs_bar.add_widget(MediaTabs(media_tab_name=file_name[-1], media_source=file_path))
         
-    def image_tab(self, file_name, s):
+    def image_tab(self, file_name, file_path):
         from components.codetabs.all_tabs import ImageTabs
-        self.root.ids.all_tabs_bar.add_widget(ImageTabs(image_tab_name=file_name[-1], image_source=s))
+        self.root.ids.all_tabs_bar.add_widget(ImageTabs(image_tab_name=file_name[-1], image_source=file_path))
 
 
     # def save_file(self, args):
