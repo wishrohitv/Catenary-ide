@@ -62,9 +62,9 @@ class Terminal(BoxLayout):
         # '''
         else:
             try:
-                s = subprocess.run(code, capture_output=True, shell=True)
+                s = subprocess.run(code,  stdout=subprocess.PIPE, universal_newlines=True,text=True)
                 Clock.schedule_once(self.focus_terminal, 0.3)
-                return s.stdout.decode()
+                return s.stdout
 
             except Exception as e:
                 Clock.schedule_once(self.focus_terminal, 0.3)
