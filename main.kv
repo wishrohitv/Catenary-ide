@@ -36,7 +36,7 @@ Screen:
                         sizable_from: "right"
                         strip_size : '3pt'
                         min_size: "145dp"
-                        max_size: "350dp"
+                        max_size: "450dp"
                         SideMenuTabWindows:
                     
                     # code panels
@@ -58,6 +58,12 @@ Screen:
                     size_hint: 1,.4
                     strip_size : '3pt'
                     sizable_from: "top"
+                    canvas:
+                        Color:
+                            rgba: (60/255, 48/255, 72/255, 1)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
                     Terminal:
 
                     
@@ -76,7 +82,7 @@ Screen:
             # BottomHeader:
             Label:
                 id: language
-                text: "plain text" #root.language
+                text: "plain text"
             Label:
                 id: cursor_pos
                 text: 'Ln , Col '

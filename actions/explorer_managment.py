@@ -13,7 +13,8 @@ def create_file_tree(folder_path):
         file_tree["children"] = []
     return file_tree
 
-folder_path = "./dummy_files"
+# folder_path = "./dummy_files"
+folder_path = "C:/Users/user/CatxCode-ide"
 file_tree = create_file_tree(folder_path)
 with open("tree.json", "w") as f:
     json.dump(file_tree, f)
