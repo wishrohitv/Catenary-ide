@@ -43,6 +43,7 @@
 
     Widget:
     LeftTabs:
+        state: "down"
         source: "./assets/navigations/terminal-white.jpg" if self.state == "normal" else "assets/navigations/terminal-pink.jpg" 
         size_hint: 1, None
         height: "50dp"
@@ -66,21 +67,18 @@
             size: self.size
     size_hint: 1, 1
     ScrollView:
-        do_scroll_y: True
-        size_hint_x: 1
-        always_overscroll: True
-        #effect_cls: "ScrollEffect"
         BoxLayout:
             orientation: "vertical"
             size_hint_y: None
             height: self.minimum_height
-            # BoxLayout:
-            #     orientation: "vertical"
-            #     padding: "5dp"
-            #     size_hint_y: None
-            #     height: self.minimum_height
-            Explorer: # label
-            # files and folders
+            BoxLayout:
+                orientation: "vertical"
+                padding: "5dp"
+                size_hint_y: None
+                height: self.minimum_height
+                Explorer: # label
+
+            # files and folders treeview class
             FoldersNameLabel:
 
 # file and folder name in tree view
@@ -138,4 +136,6 @@
 
 <FoldersNameLabel>:
     orientation: 'vertical'
+    size_hint_y: None
+    height: self.minimum_height
 

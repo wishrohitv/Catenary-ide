@@ -4,11 +4,11 @@ from kivy.properties import StringProperty, ColorProperty
 from kivy.uix.image import Image
 from kivy.lang import Builder
 from kivy.factory import Factory
+from kivy.clock import mainthread
 from kivy.uix.treeview import TreeView, TreeViewLabel, TreeViewNode
 from kivy.uix.label import Label
-import os, json
+import os, json, threading
 
-from actions.explorer_managment import create_file_tree
 
 Builder.load_file("./components/sidemenu/side_menu.kv")
 
@@ -54,19 +54,25 @@ class FoldersNameLabel(TreeView):
         super().__init__(**kwargs)
         # self.root.text = "rohit"
         # self.root_options=dict(text='Tree One')
+        self.is_loaded = True
         self.indent_level=18
         folder_path = "./dummy_files"
         self.hide_root = True
+        
+        threading.Thread(target=self.file_to_json, args=[]).start()
+        
+
+    def file_to_json(self):
+        from actions.explorer_managment import create_file_tree
         with open("tree.json") as f:
             folder_tree = json.load(f)
         self.populate_file_tree(None, folder_tree)
 
-    # def select_node(self, node):
-    #     print(node.text)
-        lang_icon_list = ['py', 'c', 'c++','cpp', 'cxx', 'js', 'java']
-        
+    def select_node(self, node):
+        print(node.nodes)        
+        print(node.level)        
     
-
+    @mainthread
     def populate_file_tree(self, parent, folder_tree):
         # , color=[1,0,0,1] if folder_tree["type"] == "folder" else [0,1,0,1]
         if parent is None:
