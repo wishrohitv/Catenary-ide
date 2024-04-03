@@ -107,68 +107,73 @@
 
 <WelcomeTab>:
     #:import random random
+    #:import Window kivy.core.window.Window
     id: welcome_tab
     text: '+'
     background_normal: ''
     background_color: [60/255, 48/255, 72/255, 1]
-    BoxLayout:
-        canvas.before:
-            Color:
-                rgba: (208/255, 187/255, 224/255,.3)
-            Rectangle:
-                pos: self.pos
-                size: self.size
+    ScrollView:
+        effect_cls: "ScrollEffect"
         BoxLayout:
-            orientation: "vertical"
-            spacing: 20
-            Label:
-                text: root.greetings
-                font_name: "./assets/fonts/seguiemj.ttf"
-                color: "black"
-                halign: "center"
-                size_hint_y: None
-                height: "70dp"
-                text_size: self.size
-                font_size: "33sp"
+            size_hint_y: None
+            height: Window.height - 60 - 30
+            canvas.before:
+                Color:
+                    rgba: (208/255, 187/255, 224/255,.3)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            BoxLayout:
+                orientation: "vertical"
+                spacing: 20
+                Label:
+                    text: root.greetings
+                    font_name: "./assets/fonts/seguiemj.ttf"
+                    color: "black"
+                    halign: "center"
+                    size_hint_y: None
+                    height: "70dp"
+                    text_size: self.size
+                    font_size: "33sp"
 
-            RoundedBoxLabel:                  
-                text: "[ref=n]Create New File[/ref]"
-                text_size: self.size
-                font_size: "18sp"
-                halign: "center"
-                valign: "middle"
-                on_ref_press: 
-                    root.create_new_file_popup()
-                    colors = ["green", "yellow", "purple", "red"]
-                    self.color = colors[random.randint(0,3)]
+                RoundedBoxLabel:                  
+                    text: "[ref=n]Create New File[/ref]"
+                    text_size: self.size
+                    font_size: "18sp"
+                    halign: "center"
+                    valign: "middle"
+                    on_ref_press: 
+                        root.create_new_file_popup()
+                        colors = ["green", "yellow", "purple", "red"]
+                        self.color = colors[random.randint(0,3)]
 
-            RoundedBoxLabel:                  
-                text: "[ref=n]Create folder[/ref]"
-                text_size: self.size
-                font_size: "18sp"
-                halign: "center"
-                valign: "middle"
-                on_ref_press: print("fjil")
+                RoundedBoxLabel:                  
+                    text: "[ref=n]Create folder[/ref]"
+                    text_size: self.size
+                    font_size: "18sp"
+                    halign: "center"
+                    valign: "middle"
+                    on_ref_press: print("fjil")
 
-            RoundedBoxLabel:
-                text: "[ref=n]Drag and Drop[/ref]"
-                text_size: self.size
-                font_size: "18sp"
-                halign: "center"
-                valign: "middle"
-                on_ref_press: print("drag")
+                RoundedBoxLabel:
+                    text: "[ref=n]Drag and Drop[/ref]"
+                    text_size: self.size
+                    font_size: "18sp"
+                    halign: "center"
+                    valign: "middle"
+                    on_ref_press: print("drag")
 
-            Widget:
-        Button:
-            text: "Close"
-            background_color: 'red'
-            background_normal: ""
-            size_hint: None, None
-            height: 30
-            width: 42
-            pos_hint: {'center_x': .975, 'center_y': .971}
-            on_press: 
-                app.close_tab(self, welcome_tab)
+                Widget:
+            Button:
+                text: "Close"
+                background_color: 'red'
+                background_normal: ""
+                size_hint: None, None
+                height: 30
+                width: 42
+                pos_hint: {'center_x': .975, 'center_y': .971}
+                on_press: 
+                    app.close_tab(self, welcome_tab)
 
 
 <ImageTabs>:

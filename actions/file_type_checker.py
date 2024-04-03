@@ -11,7 +11,7 @@ def get_file_type(file_path):
     elif file_extension.lower() in [
         '.c', '.cpp', '.h', '.hpp', '.java', '.py', '.rb', '.pl', '.sh', '.bat',
         '.html', '.css', '.js', '.php', '.asp', '.aspx', '.jsp', '.xml', '.json',
-        '.yaml', '.yml', '.ini', '.cfg', '.log', '.sql', '.md', '.markdown', '.rst'
+        '.yaml', '.yml', '.ini', '.cfg', '.log', '.sql', '.md', '.markdown', '.rst','.txt','.text'
     ]:
         return "Text_lang"
     elif file_extension.lower() in ['.mp3', '.wav', '.flac']:
