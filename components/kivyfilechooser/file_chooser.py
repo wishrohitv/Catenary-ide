@@ -9,6 +9,20 @@ Builder.load_string("""
 <ModalFileChooser>:
     id: file_chooser_popup
     BoxLayout:
+        canvas.before:
+            Color:
+                rgba: 60/255, 48/255, 72/255, 1
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [6,]
+        canvas.after:
+            Color:
+                rgba: 99/255, 166/255, 242/255, 0.327
+            Line:
+                width: 2
+                rounded_rectangle: (self.x, self.y, self.width, self.height, 6)
+                    
         orientation: "vertical"
         # header
         BoxLayout:
@@ -24,7 +38,7 @@ Builder.load_string("""
                 # on_touch_move:print(file_chooser_popup.pos) #file_chooser_popup.pos = self.pos
             Button:
                 #:set full False
-                text: '◻' if not full else "▫"
+                text: '◻' if not full else '▫'
                 font_name: "./assets/fonts/seguiemj.ttf"
                 size_hint: (None, 1)
                 width: "60dp"
@@ -50,6 +64,7 @@ Builder.load_string("""
             FileChooserIconLayout:
                 
             FileChooserListLayout:
+
         BoxLayout:
             padding: "4dp",0,"4dp","4dp"
             size_hint: (1, None)
