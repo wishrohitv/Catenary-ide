@@ -19,8 +19,11 @@ def create_file_tree(folder_path):
 # folder_path = "./dummy_files"
 if platform == "win":
     folder_path = "C:\\Users\\user\\CatxCode-ide"
+elif platform == "android":
+    folder_path = "/storage/emulated/0/"
 else:
     folder_path = "/"
+    
 file_tree = create_file_tree(folder_path)
 with open("tree.json", "w") as f:
     json.dump(file_tree, f)
