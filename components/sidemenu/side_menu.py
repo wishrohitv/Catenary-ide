@@ -47,6 +47,7 @@ class SideMenuTabWindows(BoxLayout):
 class FileNameLabel(ToggleButtonBehavior, BoxLayout): # also for folder
     file_and_folders_icon = StringProperty("python.png")
     file_and_folders_name = StringProperty()
+    source_path = StringProperty()
 
 
 class FoldersNameLabel(TreeView):
@@ -68,18 +69,19 @@ class FoldersNameLabel(TreeView):
             folder_tree = json.load(f)
         self.populate_file_tree(None, folder_tree)
 
-    def select_node(self, node):
-        print(node.nodes)        
-        print(node.level)        
+    # def select_node(self, node):
+    #     # print(node.nodes)        
+    #     # print(node.level)  
+    #     print(node.source_path)      
     
     @mainthread
     def populate_file_tree(self, parent, folder_tree):
         # , color=[1,0,0,1] if folder_tree["type"] == "folder" else [0,1,0,1]
         if parent is None:
-            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"], file_and_folders_icon="folder.png"))
+            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"], file_and_folders_icon="folder.png", source_path=folder_tree["source_path"]))
 
         else:
-            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"], file_and_folders_icon="folder.png" if folder_tree["type"] == "folder" else self.file_icon(folder_tree["name"])), parent)
+            tree_node = self.add_node(CustomTreeNode(file_and_folders_name=folder_tree["name"], file_and_folders_icon="folder.png" if folder_tree["type"] == "folder" else self.file_icon(folder_tree["name"]), source_path=folder_tree["source_path"]), parent)
 
         for child_node in folder_tree["children"]:
             self.populate_file_tree(tree_node, child_node)

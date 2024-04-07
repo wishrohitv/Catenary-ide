@@ -37,6 +37,7 @@
 
 
 <CustomTabs>:
+    #:import Window kivy.core.window.Window
     id: custom_tab
     text: f"{root.custom_tab_name} [ref=n]✖[/ref]"
     font_name: "./assets/fonts/seguiemj.ttf"
@@ -44,6 +45,7 @@
     markup: True
     background_color: "#31044e"
     background_normal: ''
+    file_path: root.file_path
 
     # code mechanism
 
@@ -54,7 +56,9 @@
             bar_color: "purple"
             effect_cls: "ScrollEffect"
             BoxLayout:
-                size_hint_y: None
+                id: scroll_child_width
+                size_hint: None, None
+                width: Window.width
                 height: self.minimum_height
                 GridLayout:
                     cols: 1
@@ -74,8 +78,8 @@
                     cursor_width: "3sp"
                     allow_copy: True
                     selection_color: 1, 136/255, 237/255, .4
-                    size_hint_y: None
                     text_size: self.width, None
+                    size_hint_y: None
                     height: self.minimum_height
                     # foreground_color: (1,0,0,1)
                     background_color: (1,1,1,1) #"#302d2e"
@@ -83,6 +87,8 @@
                     on_text: 
                         root._on_text(self)
                         # print(self.cursor_pos)
+                        len_x = self.get_max_scroll_x()
+                        root.update_textinput_width(self, len_x)
 
                     # update cursor line and column
                     on_cursor:
@@ -116,7 +122,7 @@
         effect_cls: "ScrollEffect"
         BoxLayout:
             size_hint_y: None
-            height: Window.height - 60 - 30
+            height: f"{Window.height-90.2}dp"
             canvas.before:
                 Color:
                     rgba: (208/255, 187/255, 224/255,.3)

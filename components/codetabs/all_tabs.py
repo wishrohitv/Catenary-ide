@@ -5,6 +5,7 @@ from kivy.uix.togglebutton import ToggleButtonBehavior
 from kivy.clock import Clock
 from kivy.properties import StringProperty, NumericProperty, BooleanProperty, ObjectProperty
 import time
+from kivy.core.window import Window
 
 Builder.load_file("components/codetabs/all_tabs.kv")
 
@@ -50,6 +51,9 @@ class WelcomeTab(TabbedPanelItem):
 class CustomTabs(TabbedPanelItem):
     custom_tab_name = StringProperty()
     code_text = StringProperty()
+    file_path = StringProperty()
+    # width of x axis of code input
+    initial_textinput_len_x = NumericProperty()
     
     initial_code_line = NumericProperty()
     current_code_line = NumericProperty()
@@ -103,6 +107,16 @@ class CustomTabs(TabbedPanelItem):
 
     def focus_cursor(self, dt):
         self.ids.code_input.focus = True
+
+
+    def update_textinput_width(self, instance, text_width):
+        self.initial_textinput_len_x = self.ids.scroll_child_width.width
+
+        if self.initial_textinput_len_x < text_width:
+            self.ids.scroll_child_width.width = (Window.width + text_width) 
+            self.initial_textinput_len_x = text_width
+        else:
+            self.ids.scroll_child_width.width = self.initial_textinput_len_x
 
 
 

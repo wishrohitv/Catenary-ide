@@ -4,28 +4,30 @@ from kivy.uix.label import Label
 from kivy.clock import Clock, mainthread
 from kivy.core.window import Window
 from plyer import filechooser
-import threading, time
+import threading, time, asyncio, os
 from kivy.app import App
 
 from components.sidemenu.side_menu import SideMenu
 
+
 class EditorApp(App):
     console_open = True
+
     def build(self):
         # front ui
         self.title = "CodeEditor"
         self.icon = "assets/icons/icon-x.jpg"
 
         return Builder.load_file("main.kv")
-    
+
     def on_start(self):
         Window.softinput_mode = 'below_target'
-        
 
     # code logic starts here --
-    def __init__(self, **kwargs):
-        super(EditorApp, self).__init__(**kwargs)
+    def __init__(self, **args):
+        super(EditorApp, self).__init__(**args)
         self.engine = None
+        self.current_active_tabs = []
 
     # side tabs state mananger if tab is opend or not
     def on_left_tab_state(self, instance):
@@ -54,21 +56,35 @@ class EditorApp(App):
 
     # update cursor line and column
     def update_bottom_header_label_cursor_point(self, pos, selected_text):
-        ln , col = pos
-        self.root.ids.cursor_pos.text = f'Ln {ln+1}, Col {col+1}'
+        ln, col = pos
+        self.root.ids.cursor_pos.text = f'Ln {ln + 1}, Col {col + 1}'
 
         if len(selected_text) > 0:
             self.root.ids.selected_text.text = f"{len(selected_text)} selected"
         else:
             self.root.ids.selected_text.text = ""
 
-
     # ================================================
 
     # windows files state manager selection on code tabs explorer
     def explorer_tabs(self, instance):
-        # print(instance.file_and_folders_name)
-        pass
+        from actions.file_type_checker import get_file_type
+        filename = instance.file_and_folders_name
+        path = instance.source_path
+        filenameAndPath = {"file_name": filename, "file_path": path}
+        if not os.path.isdir(path):
+            # self.text_lang_tab(filenameAndPath)
+            match get_file_type(path):
+                case "Text_lang":
+                    self.text_lang_tab(filenameAndPath)
+                    # t1 = threading.Thread(target=self.thredign, args=[file_name, self.file_path])
+                    # t1.start()
+                    # asyncio.create_task(self.text_lang_tab(file_name, self.file_path))
+
+                case "Video":
+                    self.media_tab(filenameAndPath)
+                case "Image":
+                    self.image_tab(filenameAndPath)
         # --------------------------------------
 
     # opening file from chooser
@@ -83,41 +99,61 @@ class EditorApp(App):
 
         if len(file_path) != 0:
             self.file_path = file_path[0]
-            self.title += f" {self.file_path}"
+            self.title = f"CatxCode {self.file_path}"
 
-            # file name form filepath
-            file_name = file_name_(self.file_path)
+            # file name and path form filepath in dict
+            file_name_and_path_dict = file_name_(self.file_path)
 
-            # adding to tabs
+            # adding to tabs by checking filetype
             match get_file_type(self.file_path):
                 case "Text_lang":
-                    # self.text_lang_tab(file_name, self.file_path)
-                    t1 = threading.Thread(target=self.thredign, args=[file_name, self.file_path])
-                    t1.start()
+                    self.text_lang_tab(file_name_and_path_dict)
+                    # t1 = threading.Thread(target=self.thredign, args=[file_name, self.file_path])
+                    # t1.start()
+                    # asyncio.create_task(self.text_lang_tab(file_name, self.file_path))
+
                 case "Video":
-                    self.media_tab(file_name, self.file_path)
+                    self.media_tab(file_name_and_path_dict)
                 case "Image":
-                    self.image_tab(file_name, self.file_path)
-    
-    def thredign(self,file_name, filepath):
-        with open(filepath) as f:
-            content = f.read()
-        self.text_lang_tab(file_name, content)
-    @mainthread
-    def text_lang_tab(self, file_name, content):
-        from components.codetabs.all_tabs import CustomTabs               
-        # with open(file_path) as f:
-        #     s = f.read()
-        self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name[-1], code_text=content))
+                    self.image_tab(file_name_and_path_dict)
 
-    def media_tab(self, file_name, file_path):
+    async def my_async_function(self, file_name_and_path_dict):
+        print("woohooo running async function on kivy app")
+        await self.text_lang_tab(file_name_and_path_dict)
+
+    # def thredign(self,file_name, filepath):
+    #     with open(filepath) as f:
+    #         content = f.read()
+    #     self.text_lang_tab(file_name, content)
+    # @mainthread
+    def text_lang_tab(self, file_name_and_path_dict):
+        from components.codetabs.all_tabs import CustomTabs
+        if file_name_and_path_dict["file_path"] not in self.current_active_tabs:
+            with open(file_name_and_path_dict["file_path"]) as f:
+                content = f.read()
+            self.root.ids.all_tabs_bar.add_widget(
+                CustomTabs(custom_tab_name=file_name_and_path_dict["file_name"], code_text=content,
+                           file_path=file_name_and_path_dict["file_path"]))
+
+            self.current_active_tabs.append(file_name_and_path_dict["file_path"])
+
+        self.switch_to_current_tab(file_name_and_path_dict)
+
+    def media_tab(self, file_name_and_path_dict):
         from components.codetabs.all_tabs import MediaTabs, ImageTabs
-        self.root.ids.all_tabs_bar.add_widget(MediaTabs(media_tab_name=file_name[-1], media_source=file_path))
-        
-    def image_tab(self, file_name, file_path):
-        from components.codetabs.all_tabs import ImageTabs
-        self.root.ids.all_tabs_bar.add_widget(ImageTabs(image_tab_name=file_name[-1], image_source=file_path))
+        self.root.ids.all_tabs_bar.add_widget(MediaTabs(media_tab_name=file_name_and_path_dict["file_name"],
+                                                        media_source=file_name_and_path_dict["file_path"]))
 
+        self.current_active_tabs.append(file_name_and_path_dict["file_path"])
+        self.switch_to_current_tab(file_name_and_path_dict)
+
+    def image_tab(self, file_name_and_path_dict):
+        from components.codetabs.all_tabs import ImageTabs
+        self.root.ids.all_tabs_bar.add_widget(ImageTabs(image_tab_name=file_name_and_path_dict["file_name"],
+                                                        image_source=file_name_and_path_dict["file_path"]))
+
+        self.current_active_tabs.append(file_name_and_path_dict["file_path"])
+        self.switch_to_current_tab(file_name_and_path_dict)
 
     # def save_file(self, args):
     #     with open(self.file_path, "w") as f:
@@ -147,9 +183,12 @@ class EditorApp(App):
         # tab code
         print(file_name)
         self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name, code_text=s))
+        self.switch_to_current_tab()
 
+    def switch_to_current_tab(self, file_name_and_path_dict):
         panel = self.root.ids.all_tabs_bar
         if panel.tab_list:
+            # print(panel.tab_list[0].file_path)
             panel.switch_to(panel.tab_list[0])
 
     # close_tab
@@ -188,4 +227,4 @@ class EditorApp(App):
         self.popup.open()
 
 
-EditorApp().run()
+asyncio.run(EditorApp().async_run('asyncio'))
