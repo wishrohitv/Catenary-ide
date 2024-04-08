@@ -5,12 +5,13 @@
 <h3>Run this program on your computer</h3>
 
 <h2>Window/Linux</h2>
-`
+
+<code>
 git clone https://github.com/wishrohitv/CatxCode-ide.git
 cd CatxCode-ide
 pip install -r requirements.txt
 python main.py
-`
+</code>
 
 Screenshot -
 
