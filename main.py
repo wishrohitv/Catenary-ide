@@ -183,7 +183,8 @@ class EditorApp(App):
         # tab code
         print(file_name)
         self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name, code_text=s))
-        self.switch_to_current_tab()
+
+        self.switch_to_current_tab("file_name_and_path_dict")
 
     def switch_to_current_tab(self, file_name_and_path_dict):
         panel = self.root.ids.all_tabs_bar
