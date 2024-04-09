@@ -5,6 +5,7 @@
 <h3>Run this program on your computer</h3>
 
 <h2>Window/Linux</h2>
+
 <br>
 <code>
 git clone https://github.com/wishrohitv/CatxCode-ide.git
@@ -13,6 +14,7 @@ pip install -r requirements.txt
 python main.py
 </code>
 <br>
+
 Screenshot -
 
 ![image](https://github.com/wishrohitv/CatxCode-ide/assets/126248971/8a58d3f0-003d-4501-ab25-f1ba784199a5)
