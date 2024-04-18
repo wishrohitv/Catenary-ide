@@ -99,6 +99,8 @@ class FoldersNameLabel(TreeView):
                 return "java.png"
             case "py":
                 return "python.png"         
+            case "kv":
+                return "kv.png"         
         return "file.png"
         
 # currentaly unused
