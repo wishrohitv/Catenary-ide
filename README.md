@@ -24,5 +24,4 @@ https://github.com/wishrohitv/CatxCode-ide/assets/126248971/acc7abdc-8ba0-488c-9
 
 
 
-<p><h4>Contribution:</h4> If you're willing to contribute to this project, you are free to do so. Before making any changes, please refer to the project's <a link = "https://github.com/wishrohitv/CatxCode-ide/blob/main/README.md">License.MD</a>.
-</p>
+<p><h4>Contribution:</h4> If you're willing to contribute to this project, you are free to do so. Before making any changes, please refer to the project's <a href="https://github.com/wishrohitv/CatxCode-ide/blob/main/README.md">License.MD</a>. </p>
