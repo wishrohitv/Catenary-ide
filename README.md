@@ -1,6 +1,7 @@
 ## A lightweight crossplatform Code/Text editor IDe
 
 ### Project status - work in progress
+but ready for testing
 
 <h3>Run this program on your computer</h3>
 
