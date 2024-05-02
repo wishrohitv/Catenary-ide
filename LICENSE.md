@@ -1,4 +1,4 @@
-Open Source Royalty-Based License
+CatxCode ide License
 Version 1.0, 26/03/2024
 
 Copyright (c) 2024 Rohit Vishwakarma
