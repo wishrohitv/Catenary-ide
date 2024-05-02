@@ -6,22 +6,15 @@
 
 <h2>Window/Linux</h2>
 
-<br>
-<code>
+<br><code>
 git clone https://github.com/wishrohitv/CatxCode-ide.git
-</code>
-
-<br>
+</code><br>
 <code>
 cd CatxCode-ide
-</code>
-
-<br>
+</code><br>
 <code>
 pip install -r requirements.txt
-</code>
-
-<br>
+</code><br>
 <code>
 python main.py
 </code>
