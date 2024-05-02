@@ -1,7 +1,7 @@
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.label import Label
-from kivy.clock import Clock, mainthread
+from kivy.utils import platform
 from kivy.core.window import Window
 from plyer import filechooser
 import threading, time, asyncio, os
@@ -213,19 +213,26 @@ class EditorApp(App):
         elif engine_selection[-1] == "py":
             self.engine = "python"
         try:
-            co = subprocess.run([self.engine, self.file_path])
-            f = Label(text=str(co))
-            self.popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
-                               auto_dismiss=True, size_hint=(.45, .21), separator_color="purple",
-                               background_color=(0, 0, 1, 1))
+
+            if platform == "android":
+                with open(self.file_path, mode="r", encoding="utf-8") as j:
+                    code = j.read()
+
+                exec(code)
+            else:
+                co = subprocess.run([self.engine, self.file_path])
+                f = Label(text=str(co))
+                self.popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
+                                auto_dismiss=True, size_hint=(.45, .21), separator_color="purple",
+                                background_color=(0, 0, 1, 1))
         except Exception as e:
             print(type(e))
             l = Label(text=str(e))
-            self.popup = Popup(title='Console Output', title_color="blue", title_size=18, content=l,
-                               auto_dismiss=True, size_hint=(.45, .21), separator_color="purple",
-                               background_color=(0, 0, 1, 1))
+            popup = Popup(title='Console Output', title_color="blue", title_size=18, content=l,
+                          auto_dismiss=True, size_hint=(.45, .21), separator_color="purple",
+                          background_color=(0, 0, 1, 1))
 
-        self.popup.open()
+            popup.open()
 
 
 asyncio.run(EditorApp().async_run('asyncio'))
