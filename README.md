@@ -9,10 +9,23 @@
 <br>
 <code>
 git clone https://github.com/wishrohitv/CatxCode-ide.git
+</code>
+
+<br>
+<code>
 cd CatxCode-ide
+</code>
+
+<br>
+<code>
 pip install -r requirements.txt
+</code>
+
+<br>
+<code>
 python main.py
 </code>
+
 <br>
 
 Screenshot -
