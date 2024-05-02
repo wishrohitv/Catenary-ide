@@ -89,6 +89,8 @@
                         # print(self.cursor_pos)
                         len_x = self.get_max_scroll_x()
                         root.update_textinput_width(self, len_x)
+                        # calling to root class to update current code
+                        app._current_tabs_active_code(code_input.text)
 
                     # update cursor line and column
                     on_cursor:

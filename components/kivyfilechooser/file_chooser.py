@@ -1,9 +1,8 @@
 from kivy.uix.modalview import ModalView
-from kivy.uix.boxlayout import BoxLayout
 from kivy.lang.builder import Builder
-from kivy.factory import Factory
 from kivy.properties import StringProperty
 from kivy.utils import platform
+from app_storage_implement.app_storage import storage_path
 
 Builder.load_string("""                                   
 <ModalFileChooser>:
@@ -99,9 +98,11 @@ class ModalFileChooser(ModalView):
         super().__init__(**kwargs)
         self.size_hint = (.8,.8)
         if platform == "win":
-            self.root_path = "C:/Users/user/Downloads"
+            # self.root_path = "C:/Users/user/Downloads"
+            self.root_path = storage_path
         elif platform == "android":
-            self.root_path = "/storage/emulated/0/"
+            # self.root_path = "/storage/emulated/0/"
+            self.root_path = storage_path
         elif platform == "linux":
             self.root_path = "/home/"
 

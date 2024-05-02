@@ -1,10 +1,13 @@
+import io
+
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.label import Label
 from kivy.utils import platform
 from kivy.core.window import Window
 from plyer import filechooser
-import threading, time, asyncio, os
+from app_storage_implement.app_storage import storage_path
+import threading, time, asyncio, os, sys
 from kivy.app import App
 
 from components.sidemenu.side_menu import SideMenu
@@ -26,6 +29,9 @@ class EditorApp(App):
     # code logic starts here --
     def __init__(self, **args):
         super(EditorApp, self).__init__(**args)
+        self.current_tabs_active_code = ""
+        self.current_tabs_active_file_path = ""
+
         self.engine = None
         self.current_active_tabs = []
 
@@ -135,6 +141,7 @@ class EditorApp(App):
                 CustomTabs(custom_tab_name=file_name_and_path_dict["file_name"], code_text=content,
                            file_path=file_name_and_path_dict["file_path"]))
 
+            # appending file path to identify which tab is active and removed
             self.current_active_tabs.append(file_name_and_path_dict["file_path"])
 
         self.switch_to_current_tab(file_name_and_path_dict)
@@ -166,7 +173,7 @@ class EditorApp(App):
         welcome.create_new_file_popup()
 
     def save_text_file(self, file_name):
-        with open("./dummy_files/code.js", "r") as f:
+        with open(f"{storage_path}/{file_name}", "w"), open(f"{storage_path}/{file_name}") as f:
             s = f.read()
             n = s.splitlines()
 
@@ -182,7 +189,8 @@ class EditorApp(App):
 
         # tab code
         print(file_name)
-        self.root.ids.all_tabs_bar.add_widget(CustomTabs(custom_tab_name=file_name, code_text=s))
+        self.root.ids.all_tabs_bar.add_widget(
+            CustomTabs(custom_tab_name=file_name, code_text=s, file_path=f"{storage_path}/{file_name}"))
 
         self.switch_to_current_tab("file_name_and_path_dict")
 
@@ -195,36 +203,47 @@ class EditorApp(App):
     # close_tab
     def close_tab(self, instance, tab_id):
         self.root.ids.all_tabs_bar.remove_widget(tab_id)
+
         panel = self.root.ids.all_tabs_bar
         if panel.tab_list:
             panel.switch_to(panel.tab_list[0])
         else:
             panel.clear_widgets()
 
+        # removing file path of closed tab
+        self.current_active_tabs.remove(tab_id.file_path)
+
     # run code function
     def run_code(self):
         import subprocess
         from kivy.uix.popup import Popup
-
-        engine_selection = self.file_path.split(".")
-        print(engine_selection)
-        if engine_selection[-1] == "js":
-            self.engine = "node"
-        elif engine_selection[-1] == "py":
-            self.engine = "python"
+        compiler = None
+        output = None
+        compiler_selection = self.current_tabs_active_file_path.split(".")
+        # print(compiler_selection)
+        if compiler_selection[-1] == "js":
+            compiler = "node"
+        elif compiler_selection[-1] == "py":
+            compiler = "python"
         try:
 
             if platform == "android":
-                with open(self.file_path, mode="r", encoding="utf-8") as j:
+                with open(self.current_tabs_active_file_path, mode="r", encoding="utf-8") as j:
                     code = j.read()
-
+                old_stdout = sys.stdout
+                new_stdout = io.StringIO
+                sys.stdout = new_stdout
                 exec(code)
+                output = new_stdout.getvalue()
+                sys.stdout = old_stdout
             else:
-                co = subprocess.run([self.engine, self.file_path])
-                f = Label(text=str(co))
-                self.popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
-                                auto_dismiss=True, size_hint=(.45, .21), separator_color="purple",
-                                background_color=(0, 0, 1, 1))
+                co = subprocess.run([compiler, self.current_tabs_active_file_path])
+
+            f = Label(text=str(output))
+
+            self.popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
+                               auto_dismiss=True, size_hint=(.7, .4), separator_color="purple",
+                               background_color=(0, 0, 1, 1))
         except Exception as e:
             print(type(e))
             l = Label(text=str(e))
@@ -233,6 +252,28 @@ class EditorApp(App):
                           background_color=(0, 0, 1, 1))
 
             popup.open()
+
+    # this call coming from tabbed paned
+    def _on_current_active_tabs(self, instance):
+        try:
+            # print(instance.ids.code_input.text, instance.file_path)
+            self.current_tabs_active_code = instance.ids.code_input.text
+            self.current_tabs_active_file_path = instance.file_path
+        except BaseException as e:
+            print(e)
+
+    # save file from active tabs
+    def save_active_file_from_header(self):
+        if self.current_tabs_active_file_path:
+
+            with open(self.current_tabs_active_file_path, "w") as f:
+                f.write(self.current_tabs_active_code)
+
+        from components.widgets.notify import Notify
+        obj = Notify()
+
+    def _current_tabs_active_code(self, code):
+        self.current_tabs_active_code = code
 
 
 asyncio.run(EditorApp().async_run('asyncio'))

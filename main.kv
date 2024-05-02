@@ -42,6 +42,7 @@ Screen:
                     # code panels
                     BoxLayout:
                         TabbedPanel: # TabbedPanel:
+                            on_current_tab: app._on_current_active_tabs(self.current_tab)
                             id: all_tabs_bar
                             size_hint: 1, 1
                             pos_hint: {'center_x': .5, 'center_y': .5}
