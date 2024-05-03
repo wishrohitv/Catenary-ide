@@ -1,9 +1,9 @@
 Screen:
+    name: "home_ui"
     # parent box
     on_kv_post:
         #:import TopHeader components.topheader.top_header.TopHeader
         #:import SideMenu components.sidemenu.side_menu.SideMenu
-        #:import SideMenuTabWindows components.sidemenu.side_menu.SideMenuTabWindows
         #:import WelcomeTab components.codetabs.all_tabs.WelcomeTab
         #:import Terminal components.terminal.py_terminal.Terminal
 
@@ -18,6 +18,12 @@ Screen:
         # child box for spliters
         BoxLayout:
             orientation: "horizontal"
+            canvas:
+                Color:
+                    rgba: (60/255, 48/255, 72/255, .3)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             BoxLayout:
                 size_hint_x: None
                 width: self.minimum_width
@@ -26,7 +32,7 @@ Screen:
                 orientation:'vertical'
                 id: tab_and_consle_container
                 BoxLayout:
-                    size_hint: 1,1
+                    size_hint: 1, 1
                     id: tab_container
                     # side menu Tab
                     Splitter:

@@ -55,14 +55,14 @@ class Terminal(BoxLayout):
                     except Exception as e:
                         print(e)
                         return str(e)
-                
+
             except Exception as e:
                 print(e)
                 return str(e)
         # '''
         else:
             try:
-                s = subprocess.run(code,  stdout=subprocess.PIPE, universal_newlines=True,text=True)
+                s = subprocess.run(code, stdout=subprocess.PIPE, universal_newlines=True, text=True)
                 Clock.schedule_once(self.focus_terminal, 0.3)
                 return s.stdout
 
@@ -73,12 +73,11 @@ class Terminal(BoxLayout):
     def focus_terminal(self, dt):
         self.ids.console.focus = True
 
-
     def update_textinput_width(self, instance, textinput_width, text_width):
         self.initial_textinput_len_x = textinput_width
 
         if self.initial_textinput_len_x < text_width:
-            instance.width = (Window.width + text_width) 
+            instance.width = (Window.width + text_width)
             self.initial_textinput_len_x = text_width
         else:
             instance.width = self.initial_textinput_len_x

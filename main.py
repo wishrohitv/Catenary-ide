@@ -1,20 +1,20 @@
-import io
-
 from kivy.lang import Builder
 from kivy.factory import Factory
 from kivy.uix.label import Label
 from kivy.utils import platform
 from kivy.core.window import Window
+from kivy.uix.splitter import Splitter
 from plyer import filechooser
 from app_storage_implement.app_storage import storage_path
-import threading, time, asyncio, os, sys
+import threading, time, asyncio, os, sys, io
 from kivy.app import App
 
-from components.sidemenu.side_menu import SideMenu
+from components.sidemenu.side_menu import SideMenuTabWindows
 
 
 class EditorApp(App):
     console_open = True
+    side_menu_open = True
 
     def build(self):
         # front ui
@@ -32,8 +32,14 @@ class EditorApp(App):
         self.current_tabs_active_code = ""
         self.current_tabs_active_file_path = ""
 
-        self.engine = None
         self.current_active_tabs = []
+
+        # sidemenutabwindows initialization
+        self.spliter_side_workspace_menu = Splitter(size_hint_x=.4, sizable_from="right", strip_size='3pt',
+                                                    min_size="145dp",
+                                                    max_size="450dp")
+        self.spliter_side_workspace_menu.add_widget(SideMenuTabWindows())
+
 
     # side tabs state mananger if tab is opend or not
     def on_left_tab_state(self, instance):
@@ -41,23 +47,30 @@ class EditorApp(App):
         side_tab_list = self.root.ids.tab_container.children
         # print(side_tab_list)
 
-        if len(side_tab_list) == 2:
+        if self.side_menu_open:
             if instance.state == "normal":
-                self.root.ids.tab_container.remove_widget(self.root.ids.splliter_sidemenutabswindows)
+                self.root.ids.tab_container.remove_widget(self.root.ids.tab_container.children[1])
+                self.side_menu_open = False
 
-        if len(side_tab_list) < 2:
+        else:
             if instance.state == "down":
-                self.root.ids.tab_container.add_widget(self.root.ids.splliter_sidemenutabswindows, 1)
+                self.root.ids.tab_container.add_widget(self.spliter_side_workspace_menu, 1)
+                self.side_menu_open = True
 
     def open_console_and_close(self, instance):
+        from components.widgets.terminal_splitter import TerminalSplitter
         from components.terminal.py_terminal import Terminal
+        terminal_splitter = TerminalSplitter()
+        terminal_splitter.add_widget(Terminal())
+
         tab_and_console = self.root.ids.tab_and_consle_container
-        terminal_ = self.root.ids.terminal_place
+        # print(tab_and_console.children)
+
         if self.console_open:
-            tab_and_console.remove_widget(terminal_)
+            tab_and_console.remove_widget(tab_and_console.children[0])
             self.console_open = False
         else:
-            tab_and_console.add_widget(terminal_)
+            tab_and_console.add_widget(terminal_splitter, 0)
             self.console_open = True
 
     # update cursor line and column
@@ -216,9 +229,11 @@ class EditorApp(App):
     # run code function
     def run_code(self):
         import subprocess
+        from components.widgets.popup_console_output import ConsoleOutPutPopup
         from kivy.uix.popup import Popup
         compiler = None
         output = None
+
         compiler_selection = self.current_tabs_active_file_path.split(".")
         # print(compiler_selection)
         if compiler_selection[-1] == "js":
@@ -231,24 +246,26 @@ class EditorApp(App):
                 with open(self.current_tabs_active_file_path, mode="r", encoding="utf-8") as j:
                     code = j.read()
                 old_stdout = sys.stdout
-                new_stdout = io.StringIO
+                new_stdout = io.StringIO()
                 sys.stdout = new_stdout
-                exec(code)
+                exec(code, globals())
                 output = new_stdout.getvalue()
                 sys.stdout = old_stdout
             else:
-                co = subprocess.run([compiler, self.current_tabs_active_file_path])
+                output = subprocess.run([compiler, self.current_tabs_active_file_path], stdout=subprocess.PIPE,
+                                        universal_newlines=True, text=True)
 
-            f = Label(text=str(output))
+            f = ConsoleOutPutPopup(str(output.stdout))
 
-            self.popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
-                               auto_dismiss=True, size_hint=(.7, .4), separator_color="purple",
-                               background_color=(0, 0, 1, 1))
+            popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
+                          auto_dismiss=True, size_hint=(.7, .4), separator_color="purple",
+                          background_color=(0, 0, 1, 1))
+            popup.open()
         except Exception as e:
             print(type(e))
             l = Label(text=str(e))
             popup = Popup(title='Console Output', title_color="blue", title_size=18, content=l,
-                          auto_dismiss=True, size_hint=(.45, .21), separator_color="purple",
+                          auto_dismiss=True, size_hint=(.6, .21), separator_color="purple",
                           background_color=(0, 0, 1, 1))
 
             popup.open()
@@ -265,7 +282,6 @@ class EditorApp(App):
     # save file from active tabs
     def save_active_file_from_header(self):
         if self.current_tabs_active_file_path:
-
             with open(self.current_tabs_active_file_path, "w") as f:
                 f.write(self.current_tabs_active_code)
 
