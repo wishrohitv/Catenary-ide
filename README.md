@@ -3,24 +3,19 @@
 ### Project status - work in progress
 but ready for testing
 
-<h5>Android excutable(APK) can be found <a href="https://github.com/wishrohitv/CatxCode-ide/actions">here</a> <h5>
+<h5>Android executable(APK) can be found <a href="https://github.com/wishrohitv/CatxCode-ide/actions">here</a> <h5>
+<p>CatxCode ide is capable to run pyjnius code on android and python script as well.</p>
 
 <h3>Run this program on your computer</h3>
 
 <h2>Window/Linux</h2>
 
-<br><code>
+```
 git clone https://github.com/wishrohitv/CatxCode-ide.git
-</code><br>
-<code>
 cd CatxCode-ide
-</code><br>
-<code>
 pip install -r requirements.txt
-</code><br>
-<code>
 python main.py
-</code>
+```
 
 <br>
 
