@@ -60,7 +60,7 @@ class FoldersNameLabel(TreeView):
         # self.root_options=dict(text='Tree One')
         self.is_loaded = True
         self.indent_level = 18
-        folder_path = "./dummy_files"
+        folder_path = "./ide-workspace"
         self.hide_root = True
 
         threading.Thread(target=self.file_to_json, args=[]).start()

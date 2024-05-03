@@ -51,7 +51,7 @@
 
             Widget:
                 size_hint_y: None
-                height: f"{Window.height-260}dp" if Window.height - 260 >= 8 else 0
+                height: f"{Window.height-260}dp" if Window.height - 260 > 8 else 0
             LeftTabs:
                 state: "down"
                 source: "./assets/navigations/terminal-white.jpg" if self.state == "normal" else "assets/navigations/terminal-pink.jpg" 

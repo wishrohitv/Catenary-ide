@@ -18,7 +18,6 @@ def create_file_tree(folder_path):
     return file_tree
 
 
-# folder_path = "./dummy_files"
 if platform == "win":
     # folder_path = "C:\\Users\\user\\CatxCode-ide"
     folder_path = storage_path

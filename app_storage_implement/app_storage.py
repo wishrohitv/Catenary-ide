@@ -3,7 +3,7 @@ from kivy import platform
 __all__ = ("storage_path",)
 
 if platform == "win":
-    storage_path = "./dummy_files"
+    storage_path = "ide-workspace"
 else:
     from android.storage import app_storage_path
     from android import mActivity
