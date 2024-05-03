@@ -234,6 +234,10 @@ class EditorApp(App):
         compiler = None
         output = None
 
+        popup = Popup(title='Console Output', title_color="green", title_size=18,
+                      auto_dismiss=True, size_hint=(.7, .4), separator_color="purple",
+                      background_color=(0, 0, 1, 1))
+
         compiler_selection = self.current_tabs_active_file_path.split(".")
         # print(compiler_selection)
         if compiler_selection[-1] == "js":
@@ -251,23 +255,20 @@ class EditorApp(App):
                 exec(code, globals())
                 output = new_stdout.getvalue()
                 sys.stdout = old_stdout
+
+                popup.content = ConsoleOutPutPopup(str(output))
+                popup.open()
+
             else:
                 output = subprocess.run([compiler, self.current_tabs_active_file_path], stdout=subprocess.PIPE,
                                         universal_newlines=True, text=True)
 
-            f = ConsoleOutPutPopup(str(output.stdout))
+                popup.content = ConsoleOutPutPopup(str(output.stdout))
+                popup.open()
 
-            popup = Popup(title='Console Output', title_color="green", title_size=18, content=f,
-                          auto_dismiss=True, size_hint=(.7, .4), separator_color="purple",
-                          background_color=(0, 0, 1, 1))
-            popup.open()
         except Exception as e:
             print(type(e))
-            l = Label(text=str(e))
-            popup = Popup(title='Console Output', title_color="blue", title_size=18, content=l,
-                          auto_dismiss=True, size_hint=(.6, .21), separator_color="purple",
-                          background_color=(0, 0, 1, 1))
-
+            popup.content = ConsoleOutPutPopup(str(e))
             popup.open()
 
     # this call coming from tabbed paned
