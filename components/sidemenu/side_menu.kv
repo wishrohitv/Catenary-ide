@@ -1,4 +1,5 @@
 <SideMenu>:
+    #:import platform kivy.utils.platform
     orientation: "vertical"
     padding: 5
     spacing: 5
@@ -50,7 +51,7 @@
                     app.on_left_tab_state(self)            
 
             Widget:
-                size_hint_y: None
+                size_hint_y: None if platform != "android" else 1
                 height: f"{Window.height-260}dp" if Window.height - 260 > 8 else 0
             LeftTabs:
                 state: "down"
