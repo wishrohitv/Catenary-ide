@@ -255,6 +255,7 @@ class EditorApp(App):
                 exec(code, globals())
                 output = new_stdout.getvalue()
                 sys.stdout = old_stdout
+                print(output)
 
                 popup.content = ConsoleOutPutPopup(str(output))
                 popup.open()
