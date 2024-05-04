@@ -7,7 +7,7 @@ title = CatxCode ide
 package.name = catxcode
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = org.catxcode
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -37,7 +37,7 @@ version = 1.0.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==master,Pillow>=9.4.0, docutils,pygments,plyer
+requirements = python3,kivy,Pillow>=9.4.0, docutils,pygments,plyer
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
