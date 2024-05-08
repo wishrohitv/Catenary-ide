@@ -9,8 +9,9 @@ class Notify(ModalView):
         self.add_widget(Label(text="Saved", color="green"))
         self.size_hint = (None, None)
         self.width = "100dp"
-        self.height = "60dp"
-        self.pos_hint = {'center_x': .5, 'center_y': .95}
+        self.height = "40dp"
+        self.background_color = (60/255, 48/255, 72/255, 1)
+        self.pos_hint = {'center_x': .5, 'center_y': .98}
         self.overlay_color = (0, 0, 0, 0)
 
         self.open()

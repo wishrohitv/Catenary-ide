@@ -33,7 +33,7 @@
                 group: "side_tabs"
                 size_hint: 1, None
                 height: "50dp"
-                source: "./assets/navigations/document-files-white.jpg" if self.state == "normal" else "./assets/navigations/document-files-pink.jpg"
+                source: "assets/navigations/document-files-white.jpg" if self.state == "normal" else "assets/navigations/document-files-pink.jpg"
                 on_press: 
                     root.left_tab_state(self)
                     app.on_left_tab_state(self)
@@ -41,7 +41,7 @@
             LeftTabs:
                 id: search
                 name: "search"
-                source: "./assets/navigations/magnifying-glass-white.jpg" if self.state == "normal" else "./assets/navigations/magnifying-glass-pink.jpg" 
+                source: "assets/navigations/magnifying-glass-white.jpg" if self.state == "normal" else "assets/navigations/magnifying-glass-pink.jpg"
                 group: "side_tabs"
                 size_hint: 1, None
                 height: "50dp"
@@ -55,13 +55,13 @@
                 height: f"{Window.height-260}dp" if Window.height - 260 > 8 else 0
             LeftTabs:
                 state: "down"
-                source: "./assets/navigations/terminal-white.jpg" if self.state == "normal" else "assets/navigations/terminal-pink.jpg" 
+                source: "assets/navigations/terminal-white.jpg" if self.state == "normal" else "assets/navigations/terminal-pink.jpg"
                 size_hint: 1, None
                 height: "50dp"
                 text: "terminal"
                 on_press: app.open_console_and_close(self)
             LeftTabs:
-                source: "./assets/navigations/info-white.jpg" if self.state == "normal" else "./assets/navigations/info-pink.jpg" 
+                source: "assets/navigations/info-white.jpg" if self.state == "normal" else "assets/navigations/info-pink.jpg"
                 size_hint: 1, None
                 height: "50dp"
                 text: "about"

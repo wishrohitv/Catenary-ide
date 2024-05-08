@@ -252,7 +252,7 @@ class EditorApp(App):
                 old_stdout = sys.stdout
                 new_stdout = io.StringIO()
                 sys.stdout = new_stdout
-                exec(code, globals())
+                exec(code, locals(), globals())
                 output = new_stdout.getvalue()
                 sys.stdout = old_stdout
                 # print(output)
@@ -287,8 +287,8 @@ class EditorApp(App):
             with open(self.current_tabs_active_file_path, "w") as f:
                 f.write(self.current_tabs_active_code)
 
-        from components.widgets.notify import Notify
-        obj = Notify()
+            from components.widgets.notify import Notify
+            obj = Notify()
 
     def _current_tabs_active_code(self, code):
         self.current_tabs_active_code = code
