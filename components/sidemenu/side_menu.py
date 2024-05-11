@@ -1,5 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.togglebutton import ToggleButtonBehavior
+from kivy.uix.togglebutton import ToggleButton, ToggleButtonBehavior
 from kivy.properties import StringProperty, ColorProperty
 from kivy.uix.image import Image
 from kivy.lang import Builder
@@ -29,7 +29,9 @@ class SideMenu(BoxLayout):
         Factory.AboutModal().open()
 
 
-class LeftTabs(ToggleButtonBehavior, Image):
+# class LeftTabs(ToggleButtonBehavior, Image):
+#     pass
+class LeftTabs(ToggleButton):
     pass
 
 
