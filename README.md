@@ -1,5 +1,8 @@
 ## A lightweight crossplatform Code/Text editor IDe
 
+![image](https://github.com/wishrohitv/CatxCode-ide/assets/126248971/d49a824b-8144-483f-8b55-ffc5ea4aee54)
+
+
 ### Project status - work in progress
 but ready for testing
 
