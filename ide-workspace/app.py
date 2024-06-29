@@ -9,6 +9,6 @@ h()
 class S:
 	g = 2
 	def __init__(self):
-		print(m, "rohit")
-		print(g, "rohit")
+		print(m, "local")
+		print(self.g, "properties")
 S()

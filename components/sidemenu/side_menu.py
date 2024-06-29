@@ -29,9 +29,7 @@ class SideMenu(BoxLayout):
         Factory.AboutModal().open()
 
 
-# class LeftTabs(ToggleButtonBehavior, Image):
-#     pass
-class LeftTabs(ToggleButton):
+class LeftTabs(ToggleButtonBehavior, Image):
     pass
 
 

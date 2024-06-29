@@ -18,14 +18,12 @@ def create_file_tree(folder_path):
     return file_tree
 
 
-if platform == "win":
+if platform == "win" or platform == "linux" or platform == "macosx":
     # folder_path = "C:\\Users\\user\\CatxCode-ide"
     folder_path = storage_path
 elif platform == "android":
     # folder_path = "/storage/emulated/0/"
     folder_path = storage_path
-else:
-    folder_path = "/"
 
 file_tree = create_file_tree(folder_path)
 with open("tree.json", "w") as f:
